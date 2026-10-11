@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>اسأل سؤال · الشرح التفاعلي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* 🆕 batch 42 (the engineer's idea): a QUESTION → the scene that answers it opens at once.
+   The scenes were made BEFORE (nothing is generated while he waits): the page only asks POST /ask and opens /explain at that scene.
+   🆕 batch 43 (Hareth: «لازم يسأل عن مشهد في نفس الكتاب»): always inside ONE book (his), and «where he is now» (lesson / concept):
+   a question outside his book → no scene + «خلينا نرجع لـ…» with a button back to what he is studying (the plan, AI Tutor p.19).
+   Plain HTML + JS, no AI unless the server has a meaning model (then «بالمعنى» can appear). */
+:root{--bg:#F4F5F2;--panel:#FFFFFF;--panel2:#F7F8F5;--ink:#18232A;--muted:#5A6870;--faint:#8A969C;--line:#E0E3DC;--chip:#EEF0EA;
+  --accent:#0E6E62;--accent-ink:#fff;--accent-soft:#E2F1EE;--bad:#B8322A;--bad-soft:#FBE9E7;--warm:#B5651D;--warm-soft:#FBEEDF;
+  --f-head:"Readex Pro",system-ui,sans-serif;--f-body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",system-ui,sans-serif;--r:14px;
+  --shadow:0 1px 2px rgba(16,24,28,.05),0 6px 20px rgba(16,24,28,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1416;--panel:#171E21;--panel2:#1C2427;--ink:#E5ECEE;--muted:#9CAAB0;--faint:#6F7D83;--line:#2A3438;--chip:#212A2E;
+  --accent:#46BBA9;--accent-ink:#062420;--accent-soft:#14302B;--bad:#F07269;--bad-soft:#3A1C1A;--warm:#F0A257;--warm-soft:#33240F;--shadow:none;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1416;--panel:#171E21;--panel2:#1C2427;--ink:#E5ECEE;--muted:#9CAAB0;--faint:#6F7D83;--line:#2A3438;--chip:#212A2E;
+  --accent:#46BBA9;--accent-ink:#062420;--accent-soft:#14302B;--bad:#F07269;--bad-soft:#3A1C1A;--warm:#F0A257;--warm-soft:#33240F;--shadow:none;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);line-height:1.65;font-size:15px}
+h1,h2{font-family:var(--f-head);line-height:1.3;margin:0;text-wrap:balance}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:20px 40px;display:grid;gap:16px}
+header{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:8px 16px}
+header h1{font-size:1.55rem}
+header p{margin:4px 0 0;color:var(--muted);max-width:62ch}
+.status{font-size:.82rem;color:var(--faint)}
+.status b{color:var(--muted);font-weight:600}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px}
+form{display:grid;gap:10px}
+.qrow{display:flex;gap:8px;flex-wrap:wrap}
+#q{flex:1 1 320px;min-width:0;font:inherit;font-size:1.08rem;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--panel2);color:var(--ink)}
+#q:focus{outline:none;border-color:var(--accent)}
+button{font:inherit;cursor:pointer}
+.go{background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;padding:10px 20px;font-weight:700;font-family:var(--f-head)}
+.opts{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;color:var(--muted);font-size:.9rem}
+select,input[type=number]{font:inherit;padding:5px 8px;border-radius:9px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);max-width:100%}
+.ex{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:999px;padding:4px 12px;font-size:.88rem}
+.chip:hover{border-color:var(--accent)}
+#res{display:grid;gap:12px}
+.hit{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline}
+.hit h2{font-size:1.4rem}
+.hit .where{color:var(--muted)}
+.how{display:inline-flex;gap:6px;align-items:center;border-radius:999px;padding:2px 10px;font-size:.82rem;font-weight:600;background:var(--accent-soft);color:var(--accent)}
+.how.text{background:var(--warm-soft);color:var(--warm)}
+.ms{font-variant-numeric:tabular-nums;color:var(--faint);font-size:.82rem}
+.mq{color:var(--muted);font-size:.92rem}
+.mq b{color:var(--ink);font-weight:600}
+.scenes{display:flex;flex-wrap:wrap;gap:6px}
+.sc{border:1px solid var(--line);border-radius:10px;padding:3px 10px;font-size:.86rem;background:var(--panel2)}
+.sc.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700}
+.none{background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 30%,transparent);color:var(--ink);border-radius:var(--r);padding:12px 14px}
+.frame{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--panel)}
+.frame iframe{display:block;width:100%;height:min(820px,88vh);border:0}
+.open{color:var(--accent);font-weight:600;font-size:.9rem}
+.back{background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:6px 14px;font-weight:700;font-family:var(--f-head);margin-top:8px}
+.msg{font-weight:600}
+</style></head><body>
+<div class="wrap">
+  <header>
+    <div><h1>🔎 اسأل سؤال، والمشهد بيفتح فوراً</h1>
+      <p>المشاهد معمولة من قبل ومحفوظة. اكتب سؤال بالعامية أو بالفصحى، والسيرفر بيلاقي المشهد اللي بيجاوبه وبيفتحه.</p></div>
+    <div class="status" id="status">…</div>
+  </header>
+  <section class="card">
+    <form id="f">
+      <div class="qrow"><input id="q" autocomplete="off" placeholder="مثلاً: شو بيحتاج التلقيح؟" aria-label="سؤالك"><button class="go" type="submit">اسأل</button></div>
+      <div class="opts">
+        <label>كتاب الطالب: <select id="book" required></select></label>
+        <label>هو هلأ بدرس: <select id="lesson"></select></label>
+        <label>بمفهوم: <select id="concept"><option value="">—</option></select></label>
+      </div>
+      <div class="ex" id="ex"></div>
+    </form>
+  </section>
+  <section id="res" aria-live="polite"></section>
+</div>
+<script>
+const KIND={meet:"🎬 تعرّف عليّ",play:"🎞️ فيلم",what_if:"🔮 شو لو",compare:"⚖️ قارن",journey:"🧭 الرحلة",teach:"💡 علّم صاحبك",magnet:"🧲 المغناطيس",
+  power:"⚡ وصّل الطاقة",throw:"🪃 ارمي",tower:"🏗️ البرج",ladder:"🪜 السلّم",recipe:"🍽️ أطعم",connect:"🔗 وصّل",machine:"⚙️ الآلة",slider:"🎚️ الشريط السحري",
+  before_after:"↔️ قبل وبعد",overview:"🗺️ الصورة الكبيرة",assemble:"🧩 ركّب",world:"🌍 العالم",custom:"🤖 مشهد الموديل",interview:"🎤 مقابلة",flip:"🃏 بطاقات",lens:"🔍 العدسة",dialogue:"🗣️ حوار",
+  missing:"❓ شو ناقص؟",build_up:"🌱 ابنيها من تحت",tour:"🎥 جولة الكاميرا"};
+const HOW={name:"لقيته بالاسم",meaning:"لقيته بالمعنى",text:"لقيته بالحروف"};
+/* each example belongs to a book (the search is inside ONE book); the last ones have no book: they stay in his book (→ «back») */
+const EX=[["شو بيحتاج التلقيح؟","sci_g4"],["ليش الجذور مهمة للنبتة","sci_g4"],["ما الفرق بين البسط والمقام","b_math"],["شو هي الجاذبية","phy"],
+  ["كيف بتتكون الرابطة الأيونية","chem_g11"],["شو هو الجين","bio_g12"],["شو هو التلقيح؟ (من كتاب الرياضيات)","b_math"],["شو أكلة المنسف؟",""]];
+const $=s=>document.querySelector(s),esc=t=>String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+$("#ex").innerHTML=EX.map(([q,b])=>`<button type="button" class="chip" data-book="${esc(b)}">${esc(q)}</button>`).join("");
+$("#ex").addEventListener("click",async e=>{const c=e.target.closest(".chip");if(!c)return;
+  if(c.dataset.book&&[...$("#book").options].some(o=>o.value===c.dataset.book)&&$("#book").value!==c.dataset.book){$("#book").value=c.dataset.book;await lessons();}
+  $("#q").value=c.textContent.replace(/\s*\(.*\)\s*$/,"");ask();});
+/* his book → its lessons → the concepts of his lesson («where he is now»: the search puts his lesson first, and sends him back there) */
+async function lessons(){const b=$("#book").value;$("#lesson").innerHTML="";$("#concept").innerHTML=`<option value="">—</option>`;if(!b)return;
+  try{const ls=await (await fetch(`books/${encodeURIComponent(b)}/lessons`)).json();$("#lesson").innerHTML=ls.map(l=>`<option value="${esc(l.lesson_id)}">${esc(l.title)}</option>`).join("");}catch(e){}
+  await concepts();}
+async function concepts(){const b=$("#book").value,l=$("#lesson").value;$("#concept").innerHTML=`<option value="">—</option>`;if(!b||!l)return;
+  try{const r=await (await fetch(`lessons/${encodeURIComponent(l)}/explanation?book_id=${encodeURIComponent(b)}`)).json();
+    $("#concept").innerHTML+=(r.concepts||[]).map(c=>`<option value="${esc(c.concept_id)}">${esc(c.title)}</option>`).join("");$("#concept").selectedIndex=(r.concepts||[]).length?1:0;}catch(e){}}
+$("#book").addEventListener("change",lessons);$("#lesson").addEventListener("change",concepts);
+const BOOKS=fetch("books").then(r=>r.json()).then(async bs=>{$("#book").innerHTML=bs.map(b=>`<option value="${esc(b.book_id)}">${esc(b.title)} (صف ${esc(b.grade??"؟")})</option>`).join("");await lessons();}).catch(()=>{});
+fetch("search/status").then(r=>r.json()).then(s=>{$("#status").innerHTML=`المحفوظ: <b>${s.where==="postgres"?"بالداتابيس":"بالملفات"}</b> · <b>${s.rows}</b> مشهد بـ<b>${s.books}</b> كتب · موديل المعنى: <b>${s.embed_provider==="none"?"مش مشغّل":esc(s.embed_provider)}</b>`;}).catch(()=>{$("#status").textContent="";});
+$("#f").addEventListener("submit",e=>{e.preventDefault();ask();});
+let busy=false;
+async function ask(){const q=$("#q").value.trim();if(!q||busy)return;busy=true;$("#res").innerHTML=`<div class="card">… بدوّر</div>`;
+  await BOOKS;const body={question:q,book_id:$("#book").value};if($("#lesson").value)body.lesson_id=$("#lesson").value;if($("#concept").value)body.concept_id=$("#concept").value;
+  try{const r=await fetch("ask",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});const a=await r.json();
+    if(!r.ok)throw new Error(a.detail||r.status);show(a);}catch(err){$("#res").innerHTML=`<div class="none">ما قدرت أسأل السيرفر: ${esc(err.message)}</div>`;}
+  busy=false;}
+function show(a){
+  if(!a.found){const bk=a.back;
+    $("#res").innerHTML=`<div class="none"><div class="msg">🙈 ${esc(a.message||"ما في مشهد قريب كفاية من سؤالك (أحسن ما أعرضلك إشي غلط).")}</div>
+      ${bk?`<button type="button" class="back" id="goBack">↩️ ارجع لـ«${esc(bk.name)}»</button>`:""}
+      ${a.suggestions&&a.suggestions.length?`<div class="ex" style="margin-top:8px">أو اسأل عن: ${a.suggestions.map(n=>`<button type="button" class="chip sug">شو هو ${esc(n)}؟</button>`).join("")}</div>`:""} <span class="ms">${a.ms} ms</span></div>
+      ${bk?`<div class="frame" id="backFrame" hidden></div>`:""}`;
+    $("#res").querySelectorAll(".sug").forEach(b=>b.addEventListener("click",()=>{$("#q").value=b.textContent;ask();}));
+    if(bk)$("#goBack").addEventListener("click",()=>{const f=$("#backFrame");f.hidden=false;f.innerHTML=`<iframe title="المشهد" src="${esc(bk.page_url)}&q=hi"></iframe>`;});
+    return;}
+  const sc=a.scenes.map((s,i)=>`<span class="sc${i===a.start?" on":""}">${KIND[s.kind]||esc(s.kind)}</span>`).join("");
+  $("#res").innerHTML=`<div class="card" style="display:grid;gap:10px">
+    <div class="hit"><h2>${esc(a.name)}</h2><span class="where">درس «${esc(a.lesson_title)}»${a.grade?` · صف ${a.grade}`:""}${a.in_his_lesson?" · من درسه":""}</span>
+      <span class="how ${a.how}">${HOW[a.how]||a.how}</span><span class="ms">${a.ms} ms</span></div>
+    ${a.matched_question?`<div class="mq">أقرب سؤال بيجاوبه المشهد: <b>${esc(a.matched_question)}</b></div>`:""}
+    <div class="scenes" aria-label="مشاهد المفهوم">${sc}</div>
+    <a class="open" href="${esc(a.page_url)}" target="_blank" rel="noopener">افتحه بصفحة لحاله ↗</a></div>
+    <div class="frame"><iframe title="المشهد" src="${esc(a.page_url)}${a.page_url.includes("?")?"&":"?"}q=hi"></iframe></div>`;}
+</script>
+</body></html>

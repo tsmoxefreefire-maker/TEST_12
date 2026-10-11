@@ -1,0 +1,6 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2
+httpx>=0.27   # for the API tests (fastapi.testclient)
+psycopg[binary]>=3.1   # 🆕 batch 42: the database (PostgreSQL) — used only when DATABASE_URL is set
+numpy>=1.26            # 🆕 batch 42: the search by meaning (fast math on the meaning-numbers)

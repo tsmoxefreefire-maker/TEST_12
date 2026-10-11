@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>سيرفر الشرح التفاعلي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* 🆕 batch 31: the server's front page, more professional (Hareth). Same job as before: the books on the server + send a new graph,
+   plus: the server's status, numbers, filters by stage, search, copy a book's link, and a short reference of the endpoints.
+   Plain HTML + JS, no AI, no outside libraries. */
+:root{--bg:#F4F5F2;--panel:#FFFFFF;--panel2:#F7F8F5;--ink:#18232A;--muted:#5A6870;--faint:#8A969C;--line:#E0E3DC;--chip:#EEF0EA;
+  --accent:#0E6E62;--accent-2:#0B5A50;--accent-ink:#fff;--accent-soft:#E2F1EE;--good:#1F7A4B;--good-soft:#E3F3EA;--bad:#B8322A;--bad-soft:#FBE9E7;--new:#6E3FB0;--new-soft:#F0E9FA;
+  --kids:#D9822B;--junior:#2F7FC1;--teen:#7A45B8;--senior:#1F6F5C;
+  --get:#1F7A4B;--post:#2F6FC1;--del:#B8322A;
+  --f-head:"Readex Pro",system-ui,sans-serif;--f-body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",system-ui,sans-serif;--f-code:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:14px;--shadow:0 1px 2px rgba(16,24,28,.05),0 6px 20px rgba(16,24,28,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1416;--panel:#171E21;--panel2:#1C2427;--ink:#E5ECEE;--muted:#9CAAB0;--faint:#6F7D83;--line:#2A3438;--chip:#212A2E;
+  --accent:#46BBA9;--accent-2:#5ACBB9;--accent-ink:#062420;--accent-soft:#14302B;--good:#55C487;--good-soft:#16301F;--bad:#F07269;--bad-soft:#3A1C1A;--new:#B79BF0;--new-soft:#2A2140;
+  --kids:#F0A257;--junior:#6CB0EA;--teen:#B79BF0;--senior:#5FC6A8;--get:#55C487;--post:#6CA6F0;--del:#F07269;--shadow:none;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1416;--panel:#171E21;--panel2:#1C2427;--ink:#E5ECEE;--muted:#9CAAB0;--faint:#6F7D83;--line:#2A3438;--chip:#212A2E;
+  --accent:#46BBA9;--accent-2:#5ACBB9;--accent-ink:#062420;--accent-soft:#14302B;--good:#55C487;--good-soft:#16301F;--bad:#F07269;--bad-soft:#3A1C1A;--new:#B79BF0;--new-soft:#2A2140;
+  --kids:#F0A257;--junior:#6CB0EA;--teen:#B79BF0;--senior:#5FC6A8;--get:#55C487;--post:#6CA6F0;--del:#F07269;--shadow:none;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);line-height:1.65;font-size:15px}
+a{color:inherit}
+h1,h2,h3{font-family:var(--f-head);line-height:1.3;margin:0;text-wrap:balance}
+code,.mono{font-family:var(--f-code);font-size:.86em}
+code{background:var(--chip);border-radius:6px;padding:1px 6px;direction:ltr;unicode-bidi:isolate}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line)}
+.bar .in{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--f-head);font-weight:700;text-decoration:none}
+.mark{width:32px;height:32px;border-radius:9px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:700 13px var(--f-code)}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:.8rem;color:var(--muted);background:var(--panel2);white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--faint)}
+.pill.ok .dot{background:var(--good);box-shadow:0 0 0 3px var(--good-soft)}
+.pill.bad .dot{background:var(--bad)}
+.nav{margin-inline-start:auto;display:flex;gap:6px;flex-wrap:wrap}
+.nav a{text-decoration:none;padding:6px 12px;border-radius:9px;font-weight:600;font-size:.9rem;color:var(--muted)}
+.nav a:hover{background:var(--chip);color:var(--ink)}
+@media (max-width:640px){.bar{position:static}.nav{margin-inline-start:0;width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.nav a{white-space:nowrap;padding:6px 10px}}
+
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:22px 64px;display:grid;gap:18px}
+.hero{display:grid;gap:6px}
+.eyebrow{margin:0;color:var(--accent);font-weight:700;font-size:.8rem;letter-spacing:.04em}
+.hero h1{font-size:clamp(1.55rem,3.2vw,2.2rem)}
+.lede{margin:0;color:var(--muted);max-width:72ch}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:10px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow)}
+.stat b{display:block;font:700 1.5rem/1.2 var(--f-head);font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:.85rem}
+
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:18px;align-items:start}
+@media (max-width:980px){.grid{grid-template-columns:minmax(0,1fr)}.side{order:-1}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px;min-width:0;box-shadow:var(--shadow)}
+.card h2{font-size:1.08rem}
+.side{position:sticky;top:76px}
+@media (max-width:980px){.side{position:static}}
+.small{color:var(--muted);font-size:.86rem;margin:0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:0;background:var(--accent);color:var(--accent-ink);border-radius:10px;padding:9px 16px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;gap:6px;align-items:center;justify-content:center;min-height:40px}
+.btn:hover{background:var(--accent-2)}
+.btn.alt{background:var(--panel);color:var(--ink);border:1.5px solid var(--line)}
+.btn.alt:hover{background:var(--chip)}
+.btn.warn{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn.sm{min-height:34px;padding:5px 11px;font-size:.88rem}
+.btn[disabled]{opacity:.55;cursor:wait}
+.btn.full{width:100%}
+
+/* new graph */
+.drop{border:2px dashed var(--line);border-radius:12px;padding:18px 12px;text-align:center;color:var(--muted);cursor:pointer;display:grid;gap:4px;background:var(--panel2)}
+.drop b{color:var(--ink)}
+.drop.on{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.drop .fname{font:600 .85rem var(--f-code);color:var(--accent);direction:ltr}
+details.paste summary{cursor:pointer;color:var(--muted);font-size:.9rem;font-weight:600}
+textarea{width:100%;min-height:140px;margin-top:8px;font:12.5px/1.5 var(--f-code);direction:ltr;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--panel2);color:var(--ink)}
+label.ck{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:.92rem}
+label.ck small{display:block;color:var(--faint)}
+input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent);margin-top:2px;flex:none}
+.out{border-radius:12px;padding:12px 14px;background:var(--chip);display:grid;gap:6px}
+.out.ok{background:var(--good-soft);border:1px solid color-mix(in srgb,var(--good) 35%,transparent)}
+.out.bad{background:var(--bad-soft);color:var(--bad);font-weight:600}
+.out .kv{display:flex;flex-wrap:wrap;gap:6px}
+
+/* books */
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:var(--panel2);border-radius:999px;padding:4px 12px;font:inherit;font-size:.86rem;font-weight:600;cursor:pointer;color:var(--muted)}
+.tab[aria-pressed="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.search{flex:1;min-width:160px;display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:10px;padding:0 10px;background:var(--panel2)}
+.search input{flex:1;min-width:0;border:0;background:none;height:36px;font:inherit;color:var(--ink);outline:none}
+.books{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:10px}
+.book{position:relative;border:1px solid var(--line);border-radius:12px;padding:12px 14px 12px;display:grid;gap:8px;background:var(--panel);align-content:start;overflow:hidden}
+.book::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:4px;background:var(--stc,var(--accent))}
+.book header{display:flex;gap:10px;align-items:center}
+.book .em{font-size:1.5rem;line-height:1;width:42px;height:42px;display:grid;place-items:center;background:var(--chip);border-radius:12px;flex:none}
+.book h3{font-size:.98rem}
+.meta{display:flex;flex-wrap:wrap;gap:6px}
+.tag{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:1px 9px;font-size:.76rem;font-weight:700;background:var(--chip);color:var(--muted)}
+.tag.st{background:color-mix(in srgb,var(--stc) 14%,var(--panel));color:var(--stc)}
+.tag.new{background:var(--new-soft);color:var(--new)}
+.book .acts{display:flex;gap:6px;flex-wrap:wrap}
+.empty{padding:20px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}
+
+/* endpoints */
+.eps{display:grid;gap:6px}
+.ep{display:grid;grid-template-columns:64px minmax(0,1fr);gap:4px 10px;align-items:baseline;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--panel2)}
+.m{font:700 .72rem var(--f-code);border-radius:6px;padding:2px 0;text-align:center;color:#fff;direction:ltr}
+.m.get{background:var(--get)}.m.post{background:var(--post)}.m.del{background:var(--del)}
+.ep code{background:none;padding:0;font-weight:600;overflow-wrap:anywhere}
+.ep span{grid-column:2;color:var(--muted);font-size:.86rem}
+pre{margin:0;direction:ltr;text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto;font:12.5px/1.6 var(--f-code)}
+.foot{color:var(--faint);font-size:.82rem;text-align:center}
+</style></head>
+<body>
+<header class="bar"><div class="in">
+  <a class="brand" href="/"><span class="mark">IE</span><span>الشرح التفاعلي</span></a>
+  <span class="pill" id="status"><span class="dot"></span><span id="statusTxt">بفحص السيرفر…</span></span>
+  <nav class="nav" aria-label="روابط"><a href="/explain">📖 الصفحة</a><a href="/docs">🧾 التوثيق</a><a href="/redoc">📘 ReDoc</a><a href="#dev">⚙️ للمطوّرين</a></nav>
+</div></header>
+<main class="wrap">
+  <section class="hero">
+    <p class="eyebrow">FASTAPI · بلا AI بالأساس</p>
+    <h1>سيرفر الشرح التفاعلي</h1>
+    <p class="lede">ابعت <b>أي جراف</b> (مفاهيم + أسهم «بيحتاج» + صف ومادة)، وبيطلع الشرح كامل لحاله: مشاهد متحركة، فعاليات، أصوات حسب المادة والعمر. و<b>المادة الجديدة</b> بتاخد هوية خاصة فيها.</p>
+  </section>
+  <section class="stats" aria-label="أرقام">
+    <div class="stat"><b id="sBooks">—</b><span>كتاب على السيرفر</span></div>
+    <div class="stat"><b id="sScenes">—</b><span>مشهد</span></div>
+    <div class="stat"><b id="sSubjects">—</b><span>مادة</span></div>
+    <div class="stat"><b id="sNew">—</b><span>مادة جديدة بهويتها</span></div>
+  </section>
+
+  <div class="grid">
+    <section class="card" aria-labelledby="h-books">
+      <div class="row" style="justify-content:space-between"><h2 id="h-books">📚 الكتب</h2><span class="small" id="count"></span></div>
+      <div class="tools">
+        <div class="tabs" role="group" aria-label="المرحلة">
+          <button class="tab" data-st="" aria-pressed="true">الكل</button>
+          <button class="tab" data-st="kids" aria-pressed="false">🌈 الصغار</button>
+          <button class="tab" data-st="junior" aria-pressed="false">🧭 ابتدائي عليا</button>
+          <button class="tab" data-st="teen" aria-pressed="false">🔬 إعدادي</button>
+          <button class="tab" data-st="senior" aria-pressed="false">📐 ثانوي</button>
+        </div>
+        <label class="search"><span aria-hidden="true">⌕</span><input id="q" type="search" placeholder="دوّر على كتاب أو مادة…" aria-label="دوّر"></label>
+      </div>
+      <div class="books" id="books"><p class="small">⏳ لحظة…</p></div>
+    </section>
+
+    <aside class="side">
+      <section class="card" aria-labelledby="h-new">
+        <h2 id="h-new">➕ جراف جديد</h2>
+        <p class="small">نفس شكل جرافات المنصة: كتاب ← وحدة ← موضوع ← درس ← مفاهيم. لازم يكون فيه <code>book.grade</code> و<code>book.subject</code>.</p>
+        <div class="drop" id="drop" tabindex="0" role="button" aria-label="اختار ملف الجراف">
+          <span>📂 <b>اسحب ملف الجراف (JSON) لهون</b></span><span class="small">أو اكبس لتختاره</span><span class="fname" id="fname"></span>
+          <input type="file" id="file" accept=".json,application/json" hidden>
+        </div>
+        <details class="paste"><summary>أو الصق الجراف كنص</summary>
+          <textarea id="graph" placeholder='{"book": {"id": "...", "title": "...", "subject": "...", "grade": 7}, "nodes": [...]}' aria-label="الجراف (JSON)"></textarea></details>
+        <label class="ck"><input type="checkbox" id="llm"><span>✨ استعمل الموديل<small>بس إذا في مفتاح على السيرفر. بيختار من قوائمنا ومرة وحدة.</small></span></label>
+        <button class="btn full" id="go">⚙️ اعمل الشرح</button>
+        <div id="out" hidden aria-live="polite"></div>
+      </section>
+    </aside>
+  </div>
+
+  <section class="card" id="dev" aria-labelledby="h-dev">
+    <h2 id="h-dev">⚙️ للمطوّرين: أهم الأبواب</h2>
+    <div class="eps">
+      <div class="ep"><span class="m post">POST</span><code>/explanations/generate</code><span>ابعت الجراف ← بيعمل الشرح ويحفظه، وبيرجّع رابط الصفحة والهوية.</span></div>
+      <div class="ep"><span class="m get">GET</span><code>/explain/{book_id}</code><span>الصفحة التفاعلية لكتاب (نفس المنشورة). <code>/explain</code> = كل الكتب.</span></div>
+      <div class="ep"><span class="m get">GET</span><code>/explain-data</code><span>الداتا (JSON) لأي فرونت إند بده يرسم بطريقته.</span></div>
+      <div class="ep"><span class="m get">GET</span><code>/books</code><span>الكتب على السيرفر · <code>/books/{id}/lessons</code> دروس كتاب.</span></div>
+      <div class="ep"><span class="m get">GET</span><code>/art/{key}.svg</code><span>رسمة شخصية كـ SVG (نفس رسومات الصفحة، والليغو).</span></div>
+      <div class="ep"><span class="m del">DELETE</span><code>/books/{book_id}</code><span>احذف كتاب.</span></div>
+      <div class="ep"><span class="m get">GET</span><code>/health</code><span>هل السيرفر شغّال، ونسخته.</span></div>
+    </div>
+    <p class="small">مثال (من الطرفية):</p>
+    <pre id="curl">curl -X POST {ORIGIN}/explanations/generate \
+  -H "Content-Type: application/json" \
+  -d '{"graph": { ...الجراف... }, "use_llm": false}'</pre>
+    <div class="row"><button class="btn alt sm" id="copyCurl">نسخ المثال</button><a class="btn alt sm" href="/docs">كل الأبواب ←</a></div>
+  </section>
+  <p class="foot" id="foot">الشرح التفاعلي · FastAPI</p>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const esc=t=>String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const STAGE={kids:"🌈 الصغار",junior:"🧭 ابتدائي عليا",teen:"🔬 إعدادي",senior:"📐 ثانوي"};
+const KNOWN=[["math","🔢"],["رياضيات","🔢"],["physic","🧲"],["فيزياء","🧲"],["chem","⚗️"],["كيمياء","⚗️"],["biolog","🧬"],["أحياء","🧬"],["science","🌱"],["علوم","🌱"],["geograph","🌍"],["جغرافيا","🌍"],["history","📜"],["تاريخ","📜"],["arab","🔤"],["عربي","🔤"],["english","🔤"],["لغة","🔤"]];
+const NICE={"✦hex":"⬢","✦star":"⭐","✦cloud":"☁️","✦shield":"🛡️","✦drop":"💧","✦gem":"💎"};
+const emblemOf=b=>{const id=b.identity||{};if(id.new&&id.emblem)return NICE[id.emblem]||id.emblem;const s=String(b.subject||"").toLowerCase();return (KNOWN.find(([w])=>s.includes(w))||[0,"📘"])[1];};
+let BOOKS=[],FILTER="",Q="";
+const N=n=>Number(n||0).toLocaleString("ar-EG");
+async function health(){try{const r=await fetch("/health");const j=await r.json();if(!r.ok)throw 0;
+    $("status").className="pill ok";$("statusTxt").textContent="شغّال · v"+j.version;$("foot").textContent="الشرح التفاعلي · FastAPI · v"+j.version;}
+  catch(e){$("status").className="pill bad";$("statusTxt").textContent="السيرفر مش راد";}}
+function stats(){const subj=new Set(BOOKS.map(b=>String(b.subject||"").toLowerCase()).filter(Boolean));
+  $("sBooks").textContent=N(BOOKS.length);$("sScenes").textContent=N(BOOKS.reduce((a,b)=>a+(b.scenes||0),0));
+  $("sSubjects").textContent=N(subj.size);$("sNew").textContent=N(BOOKS.filter(b=>(b.identity||{}).new).length);}
+function render(){const q=Q.trim().toLowerCase();
+  const list=BOOKS.filter(b=>(!FILTER||b.stage===FILTER)&&(!q||(b.title+" "+(b.subject||"")+" "+((b.identity||{}).label||"")).toLowerCase().includes(q)));
+  $("count").textContent=list.length===BOOKS.length?N(BOOKS.length)+" كتاب":N(list.length)+" من "+N(BOOKS.length);
+  $("books").innerHTML=list.length?list.map(b=>{const id=b.identity||{};const url=b.page_url||"/explain/"+b.book_id;
+    return `<article class="book" style="--stc:var(--${esc(b.stage||"senior")})"><header><span class="em" aria-hidden="true">${esc(emblemOf(b))}</span><div><h3>${esc(b.title)}</h3><span class="small">${b.grade?"صف "+esc(b.grade):""}${b.subject?" · "+esc(b.subject):""}</span></div></header>
+      <div class="meta">${b.stage?`<span class="tag st">${esc(STAGE[b.stage]||b.stage)}</span>`:""}<span class="tag">${N(b.scenes)} مشهد</span>${id.new?`<span class="tag new">🆕 ${esc(id.label||"مادة جديدة")}</span>`:""}</div>
+      <div class="acts"><a class="btn sm" href="${esc(url)}">افتح الشرح ←</a><button class="btn alt sm cp" data-url="${esc(url)}" type="button">🔗 نسخ الرابط</button><button class="btn alt sm del" data-id="${esc(b.book_id)}" type="button">🗑️</button></div></article>`;}).join("")
+    :`<div class="empty">${BOOKS.length?"ما في كتاب بهالبحث.":"لسا ما في كتب. ابعت جراف من «➕ جراف جديد»."}</div>`;
+  document.querySelectorAll(".del").forEach(x=>x.addEventListener("click",()=>del(x)));
+  document.querySelectorAll(".cp").forEach(x=>x.addEventListener("click",()=>copy(location.origin+x.dataset.url,x,"🔗 نسخ الرابط")));}
+async function loadBooks(){
+  try{const r=await fetch("/books");const list=await r.json();if(!r.ok)throw new Error(list.detail||r.status);BOOKS=list;stats();render();}
+  catch(e){$("books").innerHTML=`<p class="out bad">ما قدرت أجيب الكتب: ${esc(e.message)}</p>`;}}
+async function del(btn){                       /* two clicks: the first asks «متأكد؟» (no pop-up windows) */
+  if(!btn.classList.contains("warn")){btn.classList.add("warn");btn.textContent="متأكد؟";setTimeout(()=>{if(btn.isConnected){btn.classList.remove("warn");btn.textContent="🗑️";}},4000);return;}
+  btn.disabled=true;const r=await fetch("/books/"+encodeURIComponent(btn.dataset.id),{method:"DELETE"});if(!r.ok)btn.textContent="ما انحذف";loadBooks();}
+function copy(text,btn,label){const done=t=>{btn.textContent=t;setTimeout(()=>btn.textContent=label,1500);};
+  try{navigator.clipboard.writeText(text).then(()=>done("✓ انتسخ"),()=>done("انسخه: "+text));}catch(e){done("انسخه: "+text);}}
+function readFile(f){if(!f)return;$("fname").textContent=f.name;const rd=new FileReader();rd.onload=()=>{$("graph").value=rd.result;};rd.readAsText(f,"utf-8");}
+$("drop").addEventListener("click",()=>$("file").click());
+$("drop").addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();$("file").click();}});
+$("file").addEventListener("change",e=>readFile(e.target.files[0]));
+["dragenter","dragover"].forEach(t=>$("drop").addEventListener(t,e=>{e.preventDefault();$("drop").classList.add("on");}));
+["dragleave","drop"].forEach(t=>$("drop").addEventListener(t,e=>{e.preventDefault();$("drop").classList.remove("on");}));
+$("drop").addEventListener("drop",e=>readFile(e.dataTransfer.files[0]));
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{FILTER=t.dataset.st;document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-pressed",String(x===t)));render();}));
+$("q").addEventListener("input",e=>{Q=e.target.value;render();});
+$("curl").textContent=$("curl").textContent.replace("{ORIGIN}",location.origin);
+$("copyCurl").addEventListener("click",e=>copy($("curl").textContent,e.target,"نسخ المثال"));
+$("go").addEventListener("click",async()=>{
+  const out=$("out");out.hidden=false;let graph;
+  if(!$("graph").value.trim()){out.className="out bad";out.textContent="اختار ملف الجراف أو الصقه أول.";return;}
+  try{graph=JSON.parse($("graph").value);}catch(e){out.className="out bad";out.textContent="الجراف مش JSON صحيح: "+e.message;return;}
+  $("go").disabled=true;out.className="out";out.textContent="⏳ بعمل الشرح…";
+  try{const r=await fetch("/explanations/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({graph,use_llm:$("llm").checked})});
+    const j=await r.json();if(!r.ok)throw new Error(typeof j.detail==="string"?j.detail:JSON.stringify(j.detail));
+    const id=j.identity||{},snd=id.sound?`<span class="tag">🎵 ${esc(id.sound.instr)}</span>`:"";
+    out.className="out ok";
+    out.innerHTML=`<b>✅ «${esc(j.title)}»</b>
+      <div class="kv"><span class="tag">${N(j.lessons.length)} درس</span><span class="tag">${N(j.scenes)} مشهد</span>${j.stage?`<span class="tag">${esc(STAGE[j.stage]||"")}</span>`:""}${snd}</div>
+      ${id.new?`<span>🆕 مادة جديدة: <b>${esc(NICE[id.emblem]||id.emblem)} ${esc(id.label)}</b> · شخصيتها «${esc(id.mascot_name)}»</span>`:""}
+      ${j.warnings&&j.warnings.length?`<span class="small">⚠️ ${N(j.warnings.length)} ملاحظة (مشاهد انشالت لأنها ما نجحت بالفحص مع الجراف)</span>`:""}
+      <div class="row"><a class="btn sm" href="${esc(j.page_url)}">📖 افتح الشرح ←</a></div>`;
+    loadBooks();
+  }catch(e){out.className="out bad";out.textContent="ما زبط: "+e.message;}
+  finally{$("go").disabled=false;}
+});
+health();loadBooks();
+</script></body></html>
