@@ -1,0 +1,466 @@
+{
+ "book": {
+  "id": "sa_sci_g4",
+  "title": "العلوم · الصف الرابع (المنهج السعودي)",
+  "subject": "science",
+  "grade": 4
+ },
+ "nodes": [
+  {
+   "id": "sa_sci_g4_u",
+   "book_id": "sa_sci_g4",
+   "title": "الوحدة: الأرض ومواردها وصحة الإنسان",
+   "learning_objective": "يتعرّف الطالب على الصخور وعلى صحة جسمه.",
+   "level": "unit"
+  },
+  {
+   "id": "sa_sci_g4_t",
+   "book_id": "sa_sci_g4",
+   "title": "الصخور والصحة",
+   "learning_objective": "يفهم الطالب العلاقات بين المفاهيم.",
+   "level": "topic"
+  },
+  {
+   "id": "l_rocks",
+   "book_id": "sa_sci_g4",
+   "title": "المعادن والصخور",
+   "learning_objective": "يتعرّف الطالب على المعادن والصخور.",
+   "level": "lesson"
+  },
+  {
+   "id": "minerals",
+   "book_id": "sa_sci_g4",
+   "title": "المعادن",
+   "learning_objective": "مواد صلبة طبيعية تتكوّن منها الصخور، لها بريق وصلادة.",
+   "level": "entity"
+  },
+  {
+   "id": "rocks",
+   "book_id": "sa_sci_g4",
+   "title": "الصخور",
+   "learning_objective": "مواد صلبة طبيعية تتكوّن من معدن أو أكثر.",
+   "level": "entity"
+  },
+  {
+   "id": "magma",
+   "book_id": "sa_sci_g4",
+   "title": "الصهارة",
+   "learning_objective": "صخور منصهرة حارّة جداً تحت سطح الأرض.",
+   "level": "entity"
+  },
+  {
+   "id": "igneous",
+   "book_id": "sa_sci_g4",
+   "title": "الصخور النارية",
+   "learning_objective": "صخور تتكوّن عندما تبرد الصهارة وتتصلّب.",
+   "level": "entity"
+  },
+  {
+   "id": "weathering",
+   "book_id": "sa_sci_g4",
+   "title": "التجوية",
+   "learning_objective": "تفتّت الصخور بفعل الماء والرياح والحرارة.",
+   "level": "entity"
+  },
+  {
+   "id": "sedimentary",
+   "book_id": "sa_sci_g4",
+   "title": "الصخور الرسوبية",
+   "learning_objective": "صخور تتكوّن من فتات الصخور المترسّب طبقة فوق طبقة.",
+   "level": "entity"
+  },
+  {
+   "id": "metamorphic",
+   "book_id": "sa_sci_g4",
+   "title": "الصخور المتحولة",
+   "learning_objective": "صخور تغيّرت بفعل الحرارة والضغط الكبيرين.",
+   "level": "entity"
+  },
+  {
+   "id": "l_infection",
+   "book_id": "sa_sci_g4",
+   "title": "العدوى وانتقالها",
+   "learning_objective": "يتعرّف الطالب على العدوى وانتقالها.",
+   "level": "lesson"
+  },
+  {
+   "id": "germs",
+   "book_id": "sa_sci_g4",
+   "title": "الجراثيم",
+   "learning_objective": "مخلوقات دقيقة جداً لا تُرى بالعين، بعضها يسبّب المرض.",
+   "level": "entity"
+  },
+  {
+   "id": "infection",
+   "book_id": "sa_sci_g4",
+   "title": "العدوى",
+   "learning_objective": "انتقال الجراثيم من شخص مريض إلى شخص سليم.",
+   "level": "entity"
+  },
+  {
+   "id": "vectors",
+   "book_id": "sa_sci_g4",
+   "title": "نواقل المرض",
+   "learning_objective": "مخلوقات تنقل الجراثيم مثل البعوض والذباب.",
+   "level": "entity"
+  },
+  {
+   "id": "immunity",
+   "book_id": "sa_sci_g4",
+   "title": "جهاز المناعة",
+   "learning_objective": "أجزاء في الجسم تدافع عنه ضد الجراثيم.",
+   "level": "entity"
+  },
+  {
+   "id": "vaccine",
+   "book_id": "sa_sci_g4",
+   "title": "التطعيم",
+   "learning_objective": "إعطاء الجسم لقاحاً يساعد جهاز المناعة على مقاومة المرض.",
+   "level": "entity"
+  },
+  {
+   "id": "hygiene",
+   "book_id": "sa_sci_g4",
+   "title": "النظافة الشخصية",
+   "learning_objective": "غسل اليدين والاستحمام وتنظيف الأسنان للوقاية من الجراثيم.",
+   "level": "entity"
+  }
+ ],
+ "relationships": [
+  {
+   "id": "sa_sci_g4_r_t",
+   "source_node_id": "sa_sci_g4_t",
+   "target_node_id": "sa_sci_g4_u",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_l_rocks",
+   "source_node_id": "l_rocks",
+   "target_node_id": "sa_sci_g4_t",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_minerals",
+   "source_node_id": "minerals",
+   "target_node_id": "l_rocks",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_rocks",
+   "source_node_id": "rocks",
+   "target_node_id": "l_rocks",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_magma",
+   "source_node_id": "magma",
+   "target_node_id": "l_rocks",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_igneous",
+   "source_node_id": "igneous",
+   "target_node_id": "l_rocks",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_weathering",
+   "source_node_id": "weathering",
+   "target_node_id": "l_rocks",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_sedimentary",
+   "source_node_id": "sedimentary",
+   "target_node_id": "l_rocks",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_metamorphic",
+   "source_node_id": "metamorphic",
+   "target_node_id": "l_rocks",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_p_l_rocks_0",
+   "source_node_id": "minerals",
+   "target_node_id": "rocks",
+   "type": "prerequisiteOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_p_l_rocks_1",
+   "source_node_id": "magma",
+   "target_node_id": "igneous",
+   "type": "prerequisiteOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_p_l_rocks_2",
+   "source_node_id": "rocks",
+   "target_node_id": "weathering",
+   "type": "prerequisiteOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_p_l_rocks_3",
+   "source_node_id": "weathering",
+   "target_node_id": "sedimentary",
+   "type": "prerequisiteOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_p_l_rocks_4",
+   "source_node_id": "rocks",
+   "target_node_id": "metamorphic",
+   "type": "prerequisiteOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_l_infection",
+   "source_node_id": "l_infection",
+   "target_node_id": "sa_sci_g4_t",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_germs",
+   "source_node_id": "germs",
+   "target_node_id": "l_infection",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_infection",
+   "source_node_id": "infection",
+   "target_node_id": "l_infection",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_vectors",
+   "source_node_id": "vectors",
+   "target_node_id": "l_infection",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_immunity",
+   "source_node_id": "immunity",
+   "target_node_id": "l_infection",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_vaccine",
+   "source_node_id": "vaccine",
+   "target_node_id": "l_infection",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_r_hygiene",
+   "source_node_id": "hygiene",
+   "target_node_id": "l_infection",
+   "type": "subsetOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_p_l_infection_0",
+   "source_node_id": "germs",
+   "target_node_id": "infection",
+   "type": "prerequisiteOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_p_l_infection_1",
+   "source_node_id": "vectors",
+   "target_node_id": "infection",
+   "type": "prerequisiteOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_p_l_infection_2",
+   "source_node_id": "immunity",
+   "target_node_id": "vaccine",
+   "type": "prerequisiteOf",
+   "weight": 1.0
+  },
+  {
+   "id": "sa_sci_g4_p_l_infection_3",
+   "source_node_id": "germs",
+   "target_node_id": "hygiene",
+   "type": "prerequisiteOf",
+   "weight": 1.0
+  }
+ ],
+ "node_metadata": [
+  {
+   "node_id": "minerals",
+   "difficulty": "easy",
+   "estimated_minutes": 5,
+   "importance": 0.8
+  },
+  {
+   "node_id": "rocks",
+   "difficulty": "easy",
+   "estimated_minutes": 5,
+   "importance": 0.8
+  },
+  {
+   "node_id": "magma",
+   "difficulty": "easy",
+   "estimated_minutes": 5,
+   "importance": 0.8
+  },
+  {
+   "node_id": "igneous",
+   "difficulty": "easy",
+   "estimated_minutes": 5,
+   "importance": 0.8
+  },
+  {
+   "node_id": "weathering",
+   "difficulty": "easy",
+   "estimated_minutes": 5,
+   "importance": 0.8
+  },
+  {
+   "node_id": "sedimentary",
+   "difficulty": "easy",
+   "estimated_minutes": 5,
+   "importance": 0.8
+  },
+  {
+   "node_id": "metamorphic",
+   "difficulty": "easy",
+   "estimated_minutes": 5,
+   "importance": 0.8
+  },
+  {
+   "node_id": "germs",
+   "difficulty": "easy",
+   "estimated_minutes": 5,
+   "importance": 0.8
+  },
+  {
+   "node_id": "infection",
+   "difficulty": "easy",
+   "estimated_minutes": 5,
+   "importance": 0.8
+  },
+  {
+   "node_id": "vectors",
+   "difficulty": "easy",
+   "estimated_minutes": 5,
+   "importance": 0.8
+  },
+  {
+   "node_id": "immunity",
+   "difficulty": "easy",
+   "estimated_minutes": 5,
+   "importance": 0.8
+  },
+  {
+   "node_id": "vaccine",
+   "difficulty": "easy",
+   "estimated_minutes": 5,
+   "importance": 0.8
+  },
+  {
+   "node_id": "hygiene",
+   "difficulty": "easy",
+   "estimated_minutes": 5,
+   "importance": 0.8
+  }
+ ],
+ "node_content": [
+  {
+   "node_id": "minerals",
+   "content_type": "text",
+   "content_url": null,
+   "content_text": "مواد صلبة طبيعية تتكوّن منها الصخور، لها بريق وصلادة."
+  },
+  {
+   "node_id": "rocks",
+   "content_type": "text",
+   "content_url": null,
+   "content_text": "مواد صلبة طبيعية تتكوّن من معدن أو أكثر."
+  },
+  {
+   "node_id": "magma",
+   "content_type": "text",
+   "content_url": null,
+   "content_text": "صخور منصهرة حارّة جداً تحت سطح الأرض."
+  },
+  {
+   "node_id": "igneous",
+   "content_type": "text",
+   "content_url": null,
+   "content_text": "صخور تتكوّن عندما تبرد الصهارة وتتصلّب."
+  },
+  {
+   "node_id": "weathering",
+   "content_type": "text",
+   "content_url": null,
+   "content_text": "تفتّت الصخور بفعل الماء والرياح والحرارة."
+  },
+  {
+   "node_id": "sedimentary",
+   "content_type": "text",
+   "content_url": null,
+   "content_text": "صخور تتكوّن من فتات الصخور المترسّب طبقة فوق طبقة."
+  },
+  {
+   "node_id": "metamorphic",
+   "content_type": "text",
+   "content_url": null,
+   "content_text": "صخور تغيّرت بفعل الحرارة والضغط الكبيرين."
+  },
+  {
+   "node_id": "germs",
+   "content_type": "text",
+   "content_url": null,
+   "content_text": "مخلوقات دقيقة جداً لا تُرى بالعين، بعضها يسبّب المرض."
+  },
+  {
+   "node_id": "infection",
+   "content_type": "text",
+   "content_url": null,
+   "content_text": "انتقال الجراثيم من شخص مريض إلى شخص سليم."
+  },
+  {
+   "node_id": "vectors",
+   "content_type": "text",
+   "content_url": null,
+   "content_text": "مخلوقات تنقل الجراثيم مثل البعوض والذباب."
+  },
+  {
+   "node_id": "immunity",
+   "content_type": "text",
+   "content_url": null,
+   "content_text": "أجزاء في الجسم تدافع عنه ضد الجراثيم."
+  },
+  {
+   "node_id": "vaccine",
+   "content_type": "text",
+   "content_url": null,
+   "content_text": "إعطاء الجسم لقاحاً يساعد جهاز المناعة على مقاومة المرض."
+  },
+  {
+   "node_id": "hygiene",
+   "content_type": "text",
+   "content_url": null,
+   "content_text": "غسل اليدين والاستحمام وتنظيف الأسنان للوقاية من الجراثيم."
+  }
+ ]
+}
