@@ -1,0 +1,74 @@
+<style>
+/* 🆕 batch 32: 🎬 the lesson's story — a video player around a real SVG cartoon (story.js) */
+.st-screen{position:relative;border-radius:18px;overflow:hidden;background:#0E1A20;box-shadow:0 10px 30px rgba(10,20,30,.18),0 1px 3px rgba(10,20,30,.12);isolation:isolate}
+.st-screen .st-svg{display:block;width:100%;height:auto;max-width:none;cursor:pointer}
+.st-screen .st-svg .xname{paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round;font-weight:800}
+.st-screen .sa-sh{fill:rgba(0,0,0,.2)}
+body[data-q="hi"] .st-screen .sa-b{filter:drop-shadow(0 3px 2px rgba(0,0,0,.18))}
+.st-screen .st-gray .sa-b{filter:grayscale(1) brightness(1.05);opacity:.55}
+.st-screen .st-links{color:#2C5282}
+.st-screen[data-theme="board"] .st-links,.st-screen[data-theme="space"] .st-links{color:#FFE27A}
+.st-screen .st-link{fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round}
+.st-screen .st-bub rect,.st-screen .st-bub path{fill:#fff;stroke:#1F6F78;stroke-width:2}
+.st-screen .st-bub path{stroke:none}
+.st-screen .st-bub text{fill:#17222D;font-size:15px;font-weight:800}
+.st-screen .st-tt1{fill:#FFD84D;font-size:22px;font-weight:800}
+.st-screen .st-tt2{fill:#fff;font-size:32px;font-weight:900}
+/* the little worlds move a little (never when «reduce motion» is on) */
+.st-drift{animation:stDrift 18s ease-in-out infinite alternate}
+.st-slow{animation-duration:26s}
+@keyframes stDrift{from{transform:translateX(-30px)}to{transform:translateX(30px)}}
+.st-rays{transform-box:fill-box;transform-origin:center;animation:stSpin 14s linear infinite}
+@keyframes stSpin{to{transform:rotate(360deg)}}
+.st-star{animation:stTw 2.4s ease-in-out infinite}
+@keyframes stTw{50%{opacity:.25}}
+.st-bub.st-drift,.st-chalk.st-drift{animation:stFloat 9s ease-in-out infinite alternate}
+@keyframes stFloat{from{transform:translateY(6px)}to{transform:translateY(-10px)}}
+/* subtitles inside the picture */
+.st-sub{position:absolute;inset-inline:12px;bottom:12px;margin:0 auto;max-width:640px;text-align:center;color:#fff;background:rgba(10,16,20,.74);border-radius:12px;padding:8px 14px;
+  font-size:clamp(15px,2.1vw,19px);line-height:1.55;font-weight:600;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s;pointer-events:none}
+.st-sub.on{opacity:1;transform:none}
+.st-sub b{color:#FFE27A}
+/* the big ▶ in the middle */
+.st-big{position:absolute;top:50%;left:50%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;border:0;background:rgba(10,16,20,.66);color:#fff;font-size:30px;line-height:76px;
+  cursor:pointer;box-shadow:0 0 0 6px rgba(255,255,255,.18);transition:transform .15s}
+.st-big:hover{transform:scale(1.07)}
+/* the control bar */
+.st-ctl{display:flex;align-items:center;gap:10px;margin-top:8px;padding:6px 10px;border-radius:14px;background:var(--panel);border:1px solid var(--line);direction:rtl}
+.st-pp{flex:none;width:40px;height:40px;border-radius:50%;border:0;background:var(--brand);color:#fff;font-size:17px;cursor:pointer}
+.st-tl{position:relative;flex:1;min-width:0;display:flex;align-items:center}
+.st-tl input[type=range]{width:100%;accent-color:var(--brand);cursor:pointer;direction:rtl}
+.st-ticks{position:absolute;inset:0;pointer-events:none}
+.st-ticks i{position:absolute;top:50%;width:3px;height:12px;margin-top:-6px;border-radius:2px;background:color-mix(in srgb,var(--brand) 55%,transparent)}
+.st-time{flex:none;font-variant-numeric:tabular-nums;color:var(--muted);font-size:.86rem;direction:ltr}
+.st-chap{flex:none;max-width:30%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700;font-size:.88rem;color:var(--brand)}
+@media (max-width:600px){.st-chap{display:none}.st-sub{font-size:14px;bottom:8px;inset-inline:8px;padding:6px 10px}}
+@media (prefers-reduced-motion:reduce){.st-drift,.st-rays,.st-star{animation:none!important}}
+</style>
+<style>
+/* 🆕 batch 32: a fresher page around the scenes (Hareth: «لازم يكون في تحسين للصفحة») — softer cards, a backdrop for every subject, clearer controls */
+body{background:radial-gradient(1100px 480px at 88% -12%,color-mix(in srgb,var(--brand) 9%,transparent),transparent 62%),var(--bg)}
+.card2{border-radius:20px;border-color:color-mix(in srgb,var(--line) 75%,transparent);box-shadow:0 1px 2px rgba(16,24,40,.04),0 10px 28px rgba(16,24,40,.06)}
+#q.card2{padding:18px}
+body{--scenebg:linear-gradient(180deg,color-mix(in srgb,#C9D6EA 22%,var(--panel)),var(--panel))}
+body[data-subj="science"]{--scenebg:linear-gradient(180deg,color-mix(in srgb,#9FD8FF 24%,var(--panel)),color-mix(in srgb,#8FCF68 20%,var(--panel)))}
+body[data-subj="math"]{--scenebg:linear-gradient(180deg,color-mix(in srgb,#7FB8A6 18%,var(--panel)),color-mix(in srgb,#2F5D50 10%,var(--panel)))}
+body[data-subj="physics"]{--scenebg:linear-gradient(180deg,color-mix(in srgb,#9DB4FF 22%,var(--panel)),color-mix(in srgb,#3A4A8C 10%,var(--panel)))}
+body[data-subj="chemistry"]{--scenebg:linear-gradient(180deg,color-mix(in srgb,#BDEBDF 30%,var(--panel)),color-mix(in srgb,#C9B79C 18%,var(--panel)))}
+body[data-subj="geography"]{--scenebg:linear-gradient(180deg,color-mix(in srgb,#F3E7C9 45%,var(--panel)),color-mix(in srgb,#E6D3A6 30%,var(--panel)))}
+body[data-subj="history"]{--scenebg:linear-gradient(180deg,color-mix(in srgb,#FFE2B0 40%,var(--panel)),color-mix(in srgb,#EBCB8B 26%,var(--panel)))}
+body[data-subj="language"]{--scenebg:linear-gradient(180deg,color-mix(in srgb,#DDEBFA 40%,var(--panel)),var(--panel))}
+.xwrap:not(:has(.st-screen)){border-radius:16px;background:var(--scenebg);padding:6px}
+body[data-stage="teen"] .xwrap:not(:has(.st-screen)),body[data-stage="senior"] .xwrap:not(:has(.st-screen)){background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px),var(--scenebg);background-size:24px 24px,24px 24px,auto}
+.narr{border-radius:16px;border-inline-start:4px solid var(--brand);box-shadow:0 6px 18px rgba(16,24,40,.06)}
+.stepper .btn{border-radius:999px;padding-inline:18px}
+.pstop{border-radius:14px;padding:6px 4px;transition:background .2s,opacity .2s}
+.pstop.on{background:color-mix(in srgb,var(--brand) 12%,transparent)}
+.pstop[data-c="-2"] .alive{filter:drop-shadow(0 2px 4px color-mix(in srgb,var(--brand) 45%,transparent))}
+.pbar{border-radius:999px;overflow:hidden}
+#side .les{border-radius:12px;transition:background .15s}
+#side .les:hover{background:color-mix(in srgb,var(--brand) 8%,transparent)}
+/* 🆕 batch 33: the see-through layers (the title card when it is gone, the balls, sparks, bubbles, links, glow, backdrop) never catch the mouse,
+   so pointing at a character in the cartoon reaches IT (its giggle + sound), like in every other scene */
+.st-svg .st-title,.st-svg .st-orbs,.st-svg .st-sparks,.st-svg .st-bubs,.st-svg .st-links,.st-svg .sa-glow,.st-svg .sa-sh,.st-svg .st-bg{pointer-events:none}
+</style>

@@ -1,0 +1,13 @@
+<style>
+/* ===== 🆕 batch 37 (Hareth's notes) ===== */
+/* the quality switch: BOTH choices are shown and the one that is ON is filled (before, it showed only the state, which read like an order) */
+#qBtn{display:inline-flex;align-items:center;gap:3px;padding:3px 4px;opacity:1!important}
+#qBtn .q37-l{font-size:.8rem;color:var(--muted);font-weight:700;padding-inline:6px 2px}
+#qBtn .q37-o{padding:3px 10px;border-radius:999px;color:var(--muted);transition:background .2s,color .2s}
+#qBtn .q37-o.q37-on{background:var(--brand);color:#fff;font-weight:800;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+/* clean names, without the «» marks: in a title a name is bold and coloured; in a list it is a little chip; in a sentence it is bold */
+.t37-name{color:var(--brand);font-weight:900}
+.t37-chip{display:inline-block;padding:0 8px;margin:1px 2px;border-radius:999px;background:color-mix(in srgb,var(--brand) 10%,transparent);border:1px solid color-mix(in srgb,var(--brand) 25%,var(--line));font-weight:700;white-space:nowrap}
+.t37-n{font-weight:900;color:color-mix(in srgb,var(--brand) 78%,var(--ink))}
+.t37-b{font-weight:900}
+</style>

@@ -1,0 +1,59 @@
+<style>
+/* ===== 🆕 batch 35 · PLACES (places.js) ===== */
+.pl{pointer-events:none}
+.pl [data-pl]{pointer-events:auto;cursor:pointer}
+/* behind a normal scene: softer, so the characters in the middle stay the stars */
+.pl-soft{opacity:.78}
+.pl-soft .pl-far{opacity:.55}
+body[data-stage="teen"] .pl-soft,body[data-stage="senior"] .pl-soft{opacity:.5;filter:saturate(.6)}
+body[data-stage="teen"] .pl-full,body[data-stage="senior"] .pl-full{filter:saturate(.75)}
+/* moving parts: the inner group only (the outer one holds the place) */
+.pl-a{transform-box:fill-box;transform-origin:50% 100%}
+.pl-sway{animation:plSway 4.2s ease-in-out infinite}.pl-sway2{animation:plSway 5.1s ease-in-out -1.7s infinite}
+@keyframes plSway{0%,100%{transform:rotate(-2.2deg)}50%{transform:rotate(2.2deg)}}
+.pl-drift,.pl-drift2{animation:plDrift 16s ease-in-out infinite alternate}.pl-drift2{animation-duration:21s;animation-delay:-6s}
+@keyframes plDrift{from{transform:translateX(-26px)}to{transform:translateX(26px)}}
+.pl-spin .pl-rays,.pl-spin-slow{transform-box:fill-box;transform-origin:50% 50%}
+.pl-spin .pl-rays{animation:plSpin 22s linear infinite}.pl-spin-slow{animation:plSpin 60s linear infinite}
+@keyframes plSpin{to{transform:rotate(360deg)}}
+.pl-twinkle0{animation:plTw 2.4s ease-in-out infinite}.pl-twinkle1{animation:plTw 3.1s ease-in-out -1s infinite}.pl-twinkle2{animation:plTw 3.8s ease-in-out -2s infinite}
+@keyframes plTw{50%{opacity:.25}}
+.pl-bob{animation:plBob 3.2s ease-in-out infinite}@keyframes plBob{50%{transform:translateY(-6px)}}
+.pl-idle{animation:plBob 2.6s ease-in-out infinite}
+.pl-wiggle{animation:plWig 3s ease-in-out infinite}@keyframes plWig{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg)}}
+.pl-float0{animation:plFloat 6s ease-in-out infinite}.pl-float1{animation:plFloat 7s ease-in-out -2s infinite}.pl-float2{animation:plFloat 8s ease-in-out -4s infinite}
+@keyframes plFloat{50%{transform:translate(6px,-10px) rotate(6deg)}}
+.pl-wave{animation:plWave 3s linear infinite}@keyframes plWave{to{transform:translateX(-40px)}}
+.pl-swim{animation:plSwim 9s ease-in-out infinite alternate}.pl-swim2{animation:plSwim 12s ease-in-out -4s infinite alternate}
+@keyframes plSwim{from{transform:translateX(-50px)}to{transform:translateX(50px)}}
+.pl-drive{animation:plDrive 11s linear infinite}@keyframes plDrive{from{transform:translateX(-90px)}to{transform:translateX(820px)}}
+.pl-bubble .pl-bub,.pl-bubble2 .pl-bub{animation:plRise 2.2s ease-in infinite}.pl-bubble2 .pl-bub{animation-delay:-1.1s}
+@keyframes plRise{0%{transform:translateY(4px);opacity:0}30%{opacity:.9}100%{transform:translateY(-30px);opacity:0}}
+.pl-flame{transform-box:fill-box;transform-origin:50% 100%;animation:plFlick .35s ease-in-out infinite alternate}@keyframes plFlick{to{transform:scale(.88,1.12)}}
+.pl-steam{animation:plRise 2.6s ease-in infinite}
+.pl-needle{transform-box:fill-box;transform-origin:50% 50%;animation:plNeedle 5s ease-in-out infinite}@keyframes plNeedle{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(16deg)}}
+.pl-hand{transform-box:fill-box;transform-origin:50% 100%;animation:plSpin 12s steps(60) infinite}
+.pl-red{animation:plBlink 3s steps(1) infinite}.pl-green{animation:plBlink 3s steps(1) -1.5s infinite}@keyframes plBlink{50%{opacity:.2}}
+.pl-glow{animation:plTw 4s ease-in-out infinite}
+.pl-blink{transform-box:fill-box;transform-origin:50% 50%;animation:plEye 4.6s infinite}@keyframes plEye{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+/* a tap: the prop wiggles · an extra hops */
+.pl-a.pl-poke{animation:plPoke .6s ease-out 1!important}@keyframes plPoke{0%{transform:scale(1)}30%{transform:scale(1.12,.9) rotate(-4deg)}60%{transform:scale(.95,1.06) rotate(3deg)}100%{transform:scale(1)}}
+.pl-x .pl-a.pl-poke{animation:plHop .6s ease-out 1!important}@keyframes plHop{40%{transform:translateY(-14px) scale(.95,1.05)}70%{transform:translateY(0) scale(1.06,.94)}}
+/* what an extra says (never a fact of the lesson) */
+.pl-say rect,.pl-say path{fill:var(--panel);stroke:var(--line);stroke-width:1.5}
+.pl-say text{fill:var(--ink);font-size:13px;font-weight:800}
+.pl-say{animation:plSayIn .25s ease-out}@keyframes plSayIn{from{opacity:0}to{opacity:1}}
+/* the light quality and «reduce motion»: everything stands still (it is still pretty) */
+body[data-q="lo"] .pl *,body[data-q="lo"] .pl{animation:none!important}
+@media (prefers-reduced-motion:reduce){.pl *{animation:none!important}}
+/* ===== 🆕 batch 35 · the characters' little arms (chars35.js) ===== */
+.ch-arm{animation:chWave 9s ease-in-out infinite}
+.ch-arm.l{animation-name:chWaveL}
+@keyframes chWave{0%,86%,100%{transform:rotate(0)}89%{transform:rotate(-38deg)}92%{transform:rotate(-12deg)}95%{transform:rotate(-38deg)}}
+@keyframes chWaveL{0%,100%{transform:rotate(0)}50%{transform:rotate(6deg)}}
+.xnode.hop .ch-arm.r,.xnode.talking .ch-arm.r,.na-tgt.na-ready .ch-arm{animation:chHi .5s ease-in-out 3!important}
+.xnode.hop .ch-arm.l,.xnode.talking .ch-arm.l{animation:chHiL .5s ease-in-out 3!important}
+@keyframes chHi{50%{transform:rotate(-42deg)}}@keyframes chHiL{50%{transform:rotate(42deg)}}
+body[data-q="lo"] .ch-arm{animation:none!important}
+@media (prefers-reduced-motion:reduce){.ch-arm{animation:none!important}}
+</style>

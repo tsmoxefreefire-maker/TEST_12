@@ -1,0 +1,57 @@
+<style>
+/* 🆕 batch 39 (Hareth's ideas) · the thief of the twist (the little ones and the explorers) · the board and the diagram answer the student */
+.st-svg .st-thieves{pointer-events:none}
+body[data-q="hi"] .st-thief-b{filter:drop-shadow(0 3px 2px rgba(0,0,0,.2))}
+
+/* «🖐️ دورك»: the question window inside the picture (the board: a paper note · the diagram: a calm dark card) */
+.st-ask{position:absolute;inset-inline:12px;top:12px;margin:0 auto;max-width:560px;z-index:6;direction:rtl;text-align:center;
+  background:#FFFDF6;color:#2A1E14;border-radius:14px;padding:12px 14px 10px;box-shadow:0 10px 26px rgba(0,0,0,.28);border:1px solid rgba(80,50,20,.18);animation:stAskIn .28s ease-out}
+@keyframes stAskIn{from{transform:translateY(-10px);opacity:0}}
+.st-ask .sa-q{display:block;font-size:1.02rem;line-height:1.6}
+.st-ask .sa-q .t37-n{color:#B23A2A}
+.st-ask .sa-opts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0 4px}
+.st-ask .sa-opt{display:grid;justify-items:center;gap:2px;min-width:96px;padding:8px 10px;border-radius:12px;border:2px solid #D9CBB8;background:#fff;cursor:pointer;font-weight:800;font-size:.92rem;color:inherit;transition:transform .15s,border-color .15s}
+.st-ask .sa-opt:hover:not(:disabled){transform:translateY(-2px);border-color:#C2302A}
+.st-ask .sa-opt svg .sface{display:none}
+.st-ask .sa-opt.ok{border-color:#2E8B57;background:#E6F5EC}
+.st-ask .sa-opt.no{border-color:#D02B20;background:#FDECEA;opacity:.75;animation:stNo .4s}
+@keyframes stNo{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.st-ask .sa-why{min-height:1.4em;margin:6px 0 4px;font-weight:700;font-size:.95rem;line-height:1.6}
+.st-ask .sa-why .t37-n{color:inherit}
+.st-ask .sa-show{border:0;background:none;color:#7A6A58;font-weight:700;cursor:pointer;text-decoration:underline;font-size:.86rem}
+.st-ask.sa-done .sa-show{visibility:hidden}
+.st-screen[data-look="doc"] .st-ask{background:#1B2A33;color:#E3EEF0;border-color:#2E4450}
+.st-screen[data-look="doc"] .st-ask .sa-q .t37-n{color:#7FD6C9}
+.st-screen[data-look="doc"] .st-ask .sa-opt{background:#13212A;border-color:#35505C;color:#E3EEF0}
+.st-screen[data-look="doc"] .st-ask .sa-opt:hover:not(:disabled){border-color:#7FD6C9}
+.st-screen[data-look="doc"] .st-ask .sa-opt.ok{border-color:#7FD6C9;background:#17383A}
+.st-screen[data-look="doc"] .st-ask .sa-opt.no{border-color:#E9B44C;background:#3A2F1C}
+.st-screen[data-look="doc"] .st-ask .sa-show{color:#8FA9B2}
+
+/* a tap on a card / a node: what it is, what it needs, who needs it */
+.st-tap{cursor:pointer}
+.st-info{position:absolute;inset-inline-end:12px;top:12px;width:min(300px,calc(100% - 24px));z-index:6;direction:rtl;text-align:start;
+  background:#FFFDF6;color:#2A1E14;border-radius:12px;padding:10px 12px;box-shadow:0 10px 24px rgba(0,0,0,.26);border:1px solid rgba(80,50,20,.18);animation:stAskIn .25s ease-out}
+.st-info .si-n{display:block;font-size:1.05rem;margin-inline-end:24px}
+.st-info p{margin:4px 0;font-size:.92rem;line-height:1.6}
+.st-info p i{font-style:normal;font-weight:800;color:#8A5A2B}
+.st-info .si-x{position:absolute;top:6px;inset-inline-end:6px;border:0;background:none;font-size:1rem;cursor:pointer;color:inherit;width:28px;height:28px;border-radius:8px}
+.st-info .si-go{margin-top:6px;border:0;border-radius:999px;padding:5px 14px;background:#C2302A;color:#fff;font-weight:800;cursor:pointer}
+.st-screen[data-look="doc"] .st-info{background:#1B2A33;color:#E3EEF0;border-color:#2E4450}
+.st-screen[data-look="doc"] .st-info p i{color:#7FD6C9}
+.st-screen[data-look="doc"] .st-info .si-go{background:#2E8C83}
+@media (max-width:600px){.st-ask{top:8px;inset-inline:8px;padding:10px}.st-ask .sa-opt{min-width:84px;padding:6px 8px;font-size:.85rem}.st-info{top:8px;inset-inline-end:8px}}
+@media (prefers-reduced-motion:reduce){.st-ask,.st-info,.st-ask .sa-opt.no{animation:none}}
+
+/* the little worlds of the concepts (zones.js): electrons go round, raindrops fall, gears turn, the ball rolls, the bulb glows */
+.pl-orbit,.pl-gear,.pl-rollspin{transform-box:fill-box;transform-origin:center}
+.pl-orbit{animation:plOrbit 9s linear infinite}.pl-orbit2{animation-duration:13s;animation-direction:reverse}
+@keyframes plOrbit{to{transform:rotate(360deg)}}
+.pl-gear{animation:plOrbit 12s linear infinite}
+.pl-rollspin{animation:plOrbit 1.6s linear infinite}
+.pl-rain{animation:plRain 1.4s ease-in infinite}.pl-rain1{animation-delay:.45s}.pl-rain2{animation-delay:.9s}
+@keyframes plRain{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(46px);opacity:0}}
+.pl-glowbulb{animation:plBulb 2.4s ease-in-out infinite}
+@keyframes plBulb{50%{filter:drop-shadow(0 0 8px #FFE27A) brightness(1.12)}}
+@media (prefers-reduced-motion:reduce){.pl-orbit,.pl-gear,.pl-rollspin,.pl-rain,.pl-glowbulb{animation:none!important}}
+</style>

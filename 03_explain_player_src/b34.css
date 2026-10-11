@@ -1,0 +1,112 @@
+<style>
+/* ===== 🆕 batch 34 · alive arrows ===== */
+/* the fat see-through twin of each arrow: it catches the mouse / the finger (the 3px line is too thin to point at) */
+.arw-hit{fill:none;stroke:transparent;stroke-width:16;stroke-linecap:round;pointer-events:stroke;cursor:help}
+/* pointed at → the arrow wakes up: thicker, full colour, a soft glow; its word pill turns to the brand colour */
+.xedge.arw-hot{opacity:1!important}
+.xedge.arw-hot .xarrow{opacity:1;stroke-width:5;filter:drop-shadow(0 0 4px color-mix(in srgb,var(--brand) 55%,transparent))}
+.xedge.arw-hot .needs rect{fill:var(--brand);stroke:var(--brand)}
+.xedge.arw-hot .needs text{fill:#fff}
+/* the little sentence that says what the arrow means */
+.arw-tip{pointer-events:none}
+.arw-tip rect{fill:var(--ink);opacity:.92}
+.arw-tip text{fill:var(--panel);font-size:13px;font-weight:700}
+/* a lit arrow (the one we talk about) glows a little */
+.xedge.lit .xarrow{filter:drop-shadow(0 0 3px color-mix(in srgb,currentColor 40%,transparent))}
+body[data-q="lo"] .xedge .xarrow{filter:none!important}
+</style>
+<style>
+/* ===== 🆕 batch 34 · nicer graphics ===== */
+/* every character stands on the ground: a soft shadow under it (it stays when the character bobs → it looks alive) */
+.xshadow{fill:#1b2a3a;opacity:.13;pointer-events:none}
+.st-node .xshadow,body[data-stage="teen"] .xshadow,body[data-stage="senior"] .xshadow{display:none}   /* the cartoons draw their own shadow · the big ones' line drawings get a quiet drop shadow instead */
+/* the drawings: a «sticker» with a shine for the younger stages, a quiet shadow for the older ones (good quality only) */
+body[data-stage="kids"] .xnode .xbody>svg.ch,body[data-stage="junior"] .xnode .xbody>svg.ch{filter:url(#xgloss)}
+body[data-stage="teen"] .xnode .xbody>svg.ch,body[data-stage="senior"] .xnode .xbody>svg.ch{filter:url(#xsoft)}
+body[data-q="lo"] .xnode .xbody>svg.ch{filter:none!important}
+/* names: a clean halo, so a name stays readable on an arrow or a coloured background */
+.xname{paint-order:stroke;stroke:var(--panel);stroke-width:4.5px;stroke-linejoin:round}
+.xname.astag{stroke-width:3px}
+/* arrows: a little thicker, rounded, coloured by the age (warm for the little ones, ink for the big ones) */
+.xarrow{stroke-width:3.4;opacity:.62}
+body[data-stage="kids"] .xarrow:not(.in):not(.out),body[data-stage="junior"] .xarrow:not(.in):not(.out){stroke:color-mix(in srgb,var(--brand) 55%,var(--muted));color:color-mix(in srgb,var(--brand) 55%,var(--muted))}
+body[data-stage="senior"] .xarrow:not(.in):not(.out){stroke:color-mix(in srgb,var(--ink) 60%,var(--muted))}
+.needs rect{filter:drop-shadow(0 1px 1.5px rgba(16,24,40,.12))}
+/* the picture's frame: a soft inner light, and small dots for the younger stages (the older ones keep their grid) */
+.xwrap:not(:has(.st-screen)){box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -18px 32px -24px rgba(16,24,40,.12)}
+body[data-stage="kids"] .xwrap:not(:has(.st-screen)),body[data-stage="junior"] .xwrap:not(:has(.st-screen)){background-image:radial-gradient(color-mix(in srgb,var(--brand) 14%,transparent) 1.2px,transparent 1.6px),var(--scenebg);background-size:22px 22px,auto}
+</style>
+<style>
+/* ===== 🆕 batch 34 · the old activities, polished ===== */
+/* 🪜 the ladder looks like a real ladder (wood for the younger stages, metal for the older ones); the NEXT empty rung breathes */
+.na-rail{stroke:#A8743F;stroke-width:10;opacity:1;filter:drop-shadow(0 2px 1.5px rgba(60,35,10,.25))}
+.na-rungline{stroke:#C99A62;stroke-width:8;opacity:1;stroke-linecap:round}
+body[data-stage="teen"] .na-rail,body[data-stage="senior"] .na-rail{stroke:#8A97A6}
+body[data-stage="teen"] .na-rungline,body[data-stage="senior"] .na-rungline{stroke:#B3BDC8}
+.na-slot circle{fill:color-mix(in srgb,var(--panel) 80%,transparent);stroke:var(--brand);stroke-width:3;opacity:.75}
+.na-slot text{fill:var(--brand)}
+g.na-slot:first-of-type:not(.na-found) circle,g.na-slot.na-found+g.na-slot:not(.na-found) circle{animation:naBreath 1.3s ease-in-out infinite}
+@keyframes naBreath{50%{stroke-width:6;opacity:1}}
+/* ⚖️ compare: each side has its colour — the circle, its name and its box — so where a card goes is clear at a glance */
+.na-va{fill:color-mix(in srgb,var(--brand) 14%,transparent)}.na-vb{fill:color-mix(in srgb,var(--warn,#B9770E) 14%,transparent);stroke:color-mix(in srgb,var(--warn,#B9770E) 55%,transparent)}
+.na-z-a{background:color-mix(in srgb,var(--brand) 7%,var(--chip))}.na-z-a .na-zh{color:var(--brand)}
+.na-z-b{border-color:color-mix(in srgb,var(--warn,#B9770E) 55%,var(--line));background:color-mix(in srgb,var(--warn,#B9770E) 7%,var(--chip))}.na-z-b .na-zh{color:var(--warn,#B9770E)}
+.na-vlab{font-size:14px}
+.na-card{box-shadow:0 2px 6px rgba(16,24,40,.07);transition:transform .15s,box-shadow .15s,border-color .15s}
+.na-card:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(16,24,40,.12)}
+/* 🧪 recipe: a missing thing shows no faded word on its arrow (it looked broken); the word comes with the arrow when it is switched on */
+.na-p.na-poff .needs{opacity:0}
+/* 🧑‍🏫 teach: the chat looks like a chat (the corner next to the speaker is sharp, like a messaging app; nothing sticks out of the bubble) */
+.na-msg.na-me{border-end-start-radius:4px}.na-msg.na-them{border-end-end-radius:4px}
+@media (prefers-reduced-motion:reduce){g.na-slot circle{animation:none!important}.na-card{transition:none}}
+</style>
+<style>
+/* ===== 🆕 batch 34 · the five games (every class starts with «g4-») ===== */
+.g4-count{text-align:center;font-weight:800;color:var(--muted);margin:4px 0;font-variant-numeric:tabular-nums}
+/* 🪃 throw */
+.g4-catch{fill:color-mix(in srgb,var(--brand) 6%,transparent);stroke:var(--brand);stroke-width:3;stroke-dasharray:8 8;opacity:.55}
+.g4-ball{cursor:grab;touch-action:none}.g4-ball.g4-held{cursor:grabbing}.g4-ball.g4-held .xbody{filter:drop-shadow(0 8px 6px rgba(0,0,0,.25))}
+.g4-ball.g4-no{opacity:.45}.g4-ball.g4-no .xbody{filter:grayscale(.9)}.g4-ball.g4-in{cursor:default}
+.g4-aim{stroke:var(--brand);stroke-width:3;stroke-dasharray:6 6;fill:none;opacity:.6;pointer-events:none}
+/* 🏗️ tower */
+.g4-brick{cursor:pointer}.g4-brick .g4-bt{font-weight:800;font-size:15px;fill:var(--ink);paint-order:normal;stroke:none}
+.g4-brick:focus{outline:none}.g4-brick:focus-visible rect:first-child{stroke-width:3}
+.g4-brick rect:first-child{stroke-width:2}
+.g4-shine{fill:#fff;opacity:.35;pointer-events:none}
+.g4-mini .xname,.g4-mini .xshadow{display:none}
+.g4-ghost{fill:none;stroke:var(--line);stroke-width:2;stroke-dasharray:6 6;opacity:.7}
+.g4-ground{fill:color-mix(in srgb,var(--ink) 22%,var(--line))}
+.g4-brick.g4-set{cursor:default}
+.g4-won .g4-brick.g4-set rect:first-child{filter:drop-shadow(0 0 6px color-mix(in srgb,var(--good) 60%,transparent))}
+/* 🧲 magnet */
+.g4-field{fill:none;stroke:color-mix(in srgb,var(--bad) 45%,var(--brand));stroke-width:2;stroke-dasharray:4 7;opacity:.35}.g4-f2{opacity:.18}
+.g4-mag{cursor:grab;touch-action:none}.g4-mag.g4-held{cursor:grabbing}
+.g4-magicon{font-size:26px;pointer-events:none}
+.g4-it{cursor:pointer}.g4-it.g4-no{opacity:.5}.g4-it.g4-in{cursor:default}
+/* ⚙️ machine */
+.g4-belt{fill:none;stroke:var(--line);stroke-width:10;stroke-linecap:round;stroke-linejoin:round;opacity:.6}
+.g4-teeth path{fill:color-mix(in srgb,#9AA5B1 55%,var(--panel));stroke:color-mix(in srgb,#5C6A77 70%,var(--ink));stroke-width:2;stroke-linejoin:round}
+.g4-hub{fill:var(--panel);stroke:#5C6A77;stroke-width:2}
+.g4-gap .g4-teeth path{fill:none;stroke-dasharray:6 5}
+.g4-hole{fill:color-mix(in srgb,var(--panel) 70%,transparent);stroke:var(--brand);stroke-width:3;stroke-dasharray:7 6}
+.g4-qm{font-size:30px;font-weight:900;fill:var(--brand)}
+.g4-filled .g4-hole,.g4-filled .g4-qm{display:none}
+.g4-filled .g4-teeth path{fill:color-mix(in srgb,var(--good) 30%,var(--panel));stroke-dasharray:none}
+.g4-opt{cursor:pointer}.g4-opt.g4-no{opacity:.4}.g4-opt.g4-fit{cursor:default}
+.g4-run .g4-belt{stroke:color-mix(in srgb,var(--good) 55%,var(--line));stroke-dasharray:14 10;animation:g4Belt .8s linear infinite}
+@keyframes g4Belt{to{stroke-dashoffset:-24}}
+/* ⚡ power */
+.g4-wire{fill:none;stroke:var(--line);stroke-width:5;stroke-linecap:round}
+.g4-wire.g4-live{stroke:#F2B33D;stroke-dasharray:10 8;animation:g4Flow .7s linear infinite;filter:drop-shadow(0 0 4px rgba(242,179,61,.7))}
+@keyframes g4Flow{to{stroke-dashoffset:-18}}
+.g4-halo{fill:#FFE27A;opacity:0;transition:opacity .35s;pointer-events:none}.g4-halo.g4-on{opacity:.55}
+.g4-bulb.g4-lit .xbody{filter:drop-shadow(0 0 8px #F2B33D)}
+.g4-sws{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:680px;margin:8px auto 2px;padding:0 6px}
+.g4-sw{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;border:1.5px solid var(--line);border-radius:999px;background:var(--panel);color:var(--ink);font:inherit;font-weight:800;cursor:pointer;line-height:1.4}
+.g4-sw[aria-pressed="true"]{border-color:#E0A21B;background:color-mix(in srgb,#F2B33D 18%,var(--panel))}
+.g4-led{width:12px;height:12px;border-radius:50%;background:var(--line);flex:none;transition:background .3s,box-shadow .3s}
+.g4-sw[aria-pressed="true"] .g4-led{background:#F2B33D;box-shadow:0 0 0 4px rgba(242,179,61,.3)}
+body[data-stage="teen"] .g4-sw,body[data-stage="senior"] .g4-sw{border-radius:10px}
+body[data-q="lo"] .g4-wire.g4-live,body[data-q="lo"] .g4-bulb.g4-lit .xbody,body[data-q="lo"] .g4-won .g4-brick rect{filter:none!important}
+@media (prefers-reduced-motion:reduce){.g4-run .g4-belt,.g4-wire.g4-live{animation:none}.g4-halo{transition:none}}
+</style>

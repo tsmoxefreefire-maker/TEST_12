@@ -1,0 +1,65 @@
+<style>
+/* 🆕 batch 38 (Hareth: «كل مرحلة إلها مشهد مناسب إلها»): the lesson's story has a picture for every age (story38.js)
+   🌈 kids / 🧭 junior keep the characters in the lesson's place (story.css) · 🔬 teen: the investigation board · 📐 senior: the documentary diagram */
+
+/* ---------- 🔬 teen · the investigation board ---------- */
+.st-screen[data-look="board"]{background:#7A4E2B}
+.bd-paper{fill:#FFFDF6;stroke:rgba(80,50,20,.18);stroke-width:1}
+.bd-shadow{fill:rgba(45,24,8,.34)}
+.bd-band{fill:#4F7BA6}
+.bd-t-hero .bd-band{fill:#C23B2C}
+.bd-t-file .bd-band{fill:#7B5BA6}
+.bd-t-info .bd-band{fill:#7D8790}
+.bd-tag{fill:#fff;font-size:12px;font-weight:800}
+.bd-name{fill:#2A1E14;font-size:13.5px;font-weight:800}
+.bd-card .sface{display:none!important}                      /* evidence photos: the drawing alone, no face */
+.bd-card .xshadow{display:none}
+body[data-q="hi"] .bd-card .sa-b{filter:drop-shadow(0 1px 0 rgba(0,0,0,.05))}
+.st-screen .bd-card.st-gray .sa-b{filter:grayscale(1);opacity:.72}
+.st-screen .st-link.bd-str{fill:none;stroke:#C2302A;stroke-width:2.3;stroke-linecap:round}
+body[data-q="hi"] .st-screen .st-link.bd-str{filter:drop-shadow(0 2px 1px rgba(0,0,0,.28))}
+.st-screen .st-link.bd-str.bd-slack{stroke:#7E6C5E;stroke-dasharray:.018 .014!important;opacity:.75}   /* the card is off the board: its strings hang loose */
+.bd-pinhead{fill:#D8332B;stroke:#7E1712;stroke-width:1}
+.bd-p-hero .bd-pinhead{fill:#E8B321;stroke:#8A6408}
+.bd-p-file .bd-pinhead{fill:#8E6CC0;stroke:#4D347A}
+.bd-p-info .bd-pinhead{fill:#5E9C6B;stroke:#2F5A38}
+.bd-stamp text{font-size:42px;font-weight:900;paint-order:stroke;stroke:#FFFDF6;stroke-width:4px}
+.bd-stamp.bd-q text{fill:#E07A1F}
+.bd-stamp.bd-x text{fill:#D02B20}
+.bd-stamp.bd-ok text{fill:#2E8B57}
+.bd-label{fill:#FBF5E6;stroke:rgba(0,0,0,.14);stroke-width:1}
+.bd-tape{fill:rgba(255,247,210,.62)}
+.bd-ltxt{fill:#3A2A1C;font-size:16px;font-weight:800}
+.bd-glass{fill:rgba(190,225,255,.28);stroke:#3B2F25;stroke-width:3.5}
+.bd-handle{stroke:#3B2F25;stroke-width:6;stroke-linecap:round}
+.st-svg .bd-pins,.st-svg .bd-lens,.st-svg .bd-strs{pointer-events:none}
+
+/* ---------- 📐 senior · the documentary diagram ---------- */
+.st-screen[data-look="doc"]{background:#0D161B}
+.sd-q{fill:#EAF3F4;font-size:18px;font-weight:700}
+.sd-q .t37-b{fill:#7FD6C9;font-weight:800}
+.sd-n{fill:#8FA9B2;font-size:12.5px;font-weight:600}
+.sd-rule{stroke:rgba(160,200,210,.18);stroke-width:1}
+.sd-ring{fill:rgba(127,214,201,.07);stroke:#7FD6C9;stroke-width:1.8}
+.sd-hero .sd-ring{stroke-width:2.4}
+.sd-halo{fill:none;stroke:#7FD6C9;stroke-width:1.2;opacity:0}
+.sd-name text{fill:#E3EEF0;font-size:14px;font-weight:700}
+.sd-badge circle{fill:#22343E;stroke:#7FD6C9;stroke-width:1}
+.sd-badge text{fill:#BFE9E2;font-size:10.5px;font-weight:800}
+.sd-node .sface{display:none!important}
+.sd-node .xshadow{display:none}
+.sd-node .sa-b{transition:opacity .35s}
+.sd-node.sd-dim .sa-b{opacity:.3}                                 /* the rest steps back while we look at one part */
+.sd-node.sd-off .sa-b{opacity:.28}
+.sd-node.sd-off .sd-ring{stroke:#5E7680;stroke-dasharray:.04 .03!important}
+.sd-node.sd-hurt .sd-ring{stroke:#E9B44C;stroke-dasharray:.05 .025!important}
+.sd-node.sd-hurt .sd-name text{fill:#E9B44C}
+.st-screen .st-link.sd-link{fill:none;stroke:#93AEB7;stroke-width:1.6;stroke-linecap:round;transition:stroke-opacity .35s}
+.st-screen .st-link.sd-link.sd-dim{stroke-opacity:.28}
+.st-screen .st-link.sd-link.sd-off{stroke-dasharray:.03 .02!important;stroke-opacity:.35}
+.st-screen .st-link.sd-link.sd-on{stroke:#7FD6C9;stroke-width:2.6}
+body[data-q="hi"] .st-screen .st-link.sd-link.sd-on{filter:drop-shadow(0 0 4px rgba(127,214,201,.7))}
+.sd-rel{fill:#8FA9B2;font-size:11px;font-weight:600;paint-order:stroke;stroke:#13212A;stroke-width:4px}
+.st-svg .sd-head,.st-svg .sd-rel{pointer-events:none}
+@media (prefers-reduced-motion:reduce){.sd-node .sa-b,.sd-link{transition:none}}
+</style>

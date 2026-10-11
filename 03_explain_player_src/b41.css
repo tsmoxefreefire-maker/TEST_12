@@ -1,0 +1,12 @@
+<style>
+/* 🆕 batch 41 (Hareth: «الفعاليات… الطالب هو اللي بيلعب فيها مو أوتوماتيك»): «🖐️ دورك!» under an activity.
+   It stays (no countdown, no timer bar) until the student wins the game or taps «✓ خلصت». */
+.yourturn{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0 0;padding:9px 12px;border:2px dashed var(--good);border-radius:12px;
+  background:color-mix(in srgb,var(--good) 10%,var(--panel));animation:yt-in .35s ease-out both}
+.yourturn .yt-t{flex:1;min-width:180px;font-weight:600}
+.yourturn .yt-t b{color:var(--good)}
+.yourturn #turnDone{border-color:var(--good)}
+body.kid .yourturn .yt-t{font-size:1.06rem}
+@keyframes yt-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.yourturn{animation:none}}
+</style>

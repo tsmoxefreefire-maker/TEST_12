@@ -1,0 +1,36 @@
+<style>
+/* 🆕 batch 43 · two new activities (acts43.js): 🕵️ مين أنا؟ · 🧩 ركّب الجملة. Colours lean on the page's tokens (light and dark). */
+/* 🕵️ who am I */
+.w43-spot ellipse{fill:color-mix(in srgb,var(--ink) 10%,transparent)}
+.w43-hidden{visibility:hidden}
+.w43-mys path{fill:color-mix(in srgb,var(--ink) 72%,var(--panel));stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round}
+.w43-mys text{fill:var(--panel);font-weight:900;font-size:58px}
+.w43-mys{transition:opacity .45s,transform .45s;transform-box:fill-box;transform-origin:center}
+.w43-mys.w43-gone{opacity:0;pointer-events:none}
+.w43-pop .xbody{animation:w43pop .6s ease-out}
+@keyframes w43pop{0%{transform:scale(.3)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+.w43-clues{list-style:none;max-width:660px;margin:6px auto 0;padding:0 8px;display:flex;flex-direction:column;gap:6px}
+.w43-clue{display:none;padding:8px 12px;border:1.5px dashed color-mix(in srgb,var(--brand) 55%,var(--line));border-radius:12px;background:color-mix(in srgb,var(--brand) 7%,var(--panel));line-height:1.7;overflow-wrap:break-word}
+.w43-clue.on{display:block}
+.w43-clue.w43-new{animation:w43in .7s ease-out}
+@keyframes w43in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.w43-n{font-weight:900;color:color-mix(in srgb,var(--brand) 80%,var(--ink));white-space:nowrap}
+.pstop.w43-mask{position:relative}
+.pstop.w43-mask>*{visibility:hidden}
+.pstop.w43-mask::after{content:"؟";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:26px;color:var(--ink)}
+/* 🧩 build the sentence */
+.s43-line{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:660px;margin:6px auto 4px;padding:8px;border-radius:14px;
+  background:color-mix(in srgb,var(--ink) 5%,var(--panel));border:1.5px solid var(--line);direction:rtl}
+.s43-slot{min-width:56px;min-height:40px;padding:6px 10px;border:2px dashed color-mix(in srgb,var(--ink) 30%,var(--line));border-radius:10px;
+  display:inline-flex;align-items:center;justify-content:center;color:color-mix(in srgb,var(--ink) 45%,transparent);font-weight:800;line-height:1.6}
+.s43-slot.on{border-style:solid;border-color:var(--good);color:var(--ink);background:color-mix(in srgb,var(--good) 14%,var(--panel))}
+.s43-slot.s43-new{animation:w43pop .5s ease-out}
+.s43-line.s43-done{border-color:var(--good);box-shadow:0 0 0 3px color-mix(in srgb,var(--good) 25%,transparent)}
+.s43-tray{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:660px;margin:4px auto 8px;padding:0 6px}
+.s43-chunk{text-align:center}
+.s43-chunk.s43-used{visibility:hidden}
+.s43-chunk.s43-shake{animation:s43shake .45s}
+@keyframes s43shake{0%,100%{transform:none}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@media (prefers-reduced-motion:reduce){.w43-pop .xbody,.w43-clue.w43-new,.s43-slot.s43-new,.s43-chunk.s43-shake{animation:none}}
+body[data-stage="teen"] .w43-clue,body[data-stage="senior"] .w43-clue,body[data-stage="senior"] .s43-slot{border-radius:8px}
+</style>

@@ -1,0 +1,141 @@
+<style>
+/* ===== 🆕 batch 36 · CHARACTERS 2.0 (chars36.js) ===== */
+.ch-breathe{transform-box:fill-box;transform-origin:50% 100%;animation:chBreathe 3.6s ease-in-out infinite}
+@keyframes chBreathe{0%,100%{transform:scale(1,1)}50%{transform:scale(.985,1.03)}}
+[data-mood="laugh"] .ch-breathe,[data-mood="joy"] .ch-breathe{animation:chHappy .9s ease-in-out infinite}
+@keyframes chHappy{0%,100%{transform:translateY(0) scale(1,1)}30%{transform:translateY(-4px) scale(.97,1.04)}60%{transform:translateY(0) scale(1.04,.96)}}
+[data-mood="sad"] .ch-breathe{animation:chSad 4.8s ease-in-out infinite}
+@keyframes chSad{0%,100%{transform:scale(1,.97)}50%{transform:scale(1.01,.95)}}
+.xnode:hover .ch-breathe{animation:chSquish .55s ease-out 1}
+@keyframes chSquish{30%{transform:scale(1.08,.9)}60%{transform:scale(.95,1.06)}100%{transform:scale(1,1)}}
+[data-mood="laugh"] .ch-foot.l,[data-mood="joy"] .ch-foot.l{animation:chTap .45s ease-in-out infinite}
+[data-mood="laugh"] .ch-foot.r,[data-mood="joy"] .ch-foot.r{animation:chTap .45s ease-in-out -.22s infinite}
+@keyframes chTap{50%{transform:rotate(-16deg)}}
+/* the older stages: only a quiet breath (serious) */
+body[data-stage="teen"] .ch-breathe,body[data-stage="senior"] .ch-breathe{animation:chBreathe 5.2s ease-in-out infinite!important}
+body[data-q="lo"] .ch-breathe,body[data-q="lo"] .ch-foot{animation:none!important}
+@media (prefers-reduced-motion:reduce){.ch-breathe,.ch-foot{animation:none!important}}
+/* ===== 🆕 batch 36 · THE PLACES LIVE (places.js + life36.js) ===== */
+.pl-shadow{fill:#1b2a3a;opacity:.12}
+.pl-soft .pl-shadow{opacity:.08}
+/* depth with your finger: the far layer and the near layer move a little apart */
+.pl{--px:0;--py:0}
+.pl-bg{transform:translate(calc(var(--px) * 3px),calc(var(--py) * 2px));transition:transform .5s ease-out}
+.pl-near{transform:translate(calc(var(--px) * -6px),calc(var(--py) * -3px));transition:transform .5s ease-out}
+/* the sun's face and glow */
+.pl-glow2{transform-box:fill-box;transform-origin:50% 50%;animation:plGlowB 5s ease-in-out infinite}@keyframes plGlowB{50%{transform:scale(1.12);opacity:.75}}
+.pl-shine .pl-rays{animation:plRayBurst 1.5s ease-out 1!important}@keyframes plRayBurst{30%{transform:rotate(40deg) scale(1.35)}100%{transform:rotate(90deg) scale(1)}}
+.pl-shine .pl-glow2{animation:plGlowUp 1.5s ease-out 1!important}@keyframes plGlowUp{30%{transform:scale(1.5);opacity:1}}
+/* the living things that come and go */
+.pl-cross{animation:plCross 14s linear infinite both}@keyframes plCross{0%{transform:translateX(-80px);opacity:1}62%{transform:translateX(var(--dx));opacity:1}62.1%,100%{transform:translateX(var(--dx));opacity:0}}
+.pl-cross.pl-rtl{animation-name:plCrossR}@keyframes plCrossR{0%{transform:translateX(var(--dx));opacity:1}62%{transform:translateX(-80px);opacity:1}62.1%,100%{transform:translateX(-80px);opacity:0}}
+.pl-bobfly{animation:plBobFly 2.4s ease-in-out infinite}@keyframes plBobFly{50%{transform:translateY(-12px)}}
+.pl-wing{transform-box:fill-box;transform-origin:100% 100%;animation:plFlap .32s ease-in-out infinite alternate}@keyframes plFlap{from{transform:scaleY(1)}to{transform:scaleY(-.55)}}
+.pl-hover{animation:plHoverK 7s ease-in-out infinite}@keyframes plHoverK{0%,100%{transform:translate(0,0)}25%{transform:translate(18px,-12px)}50%{transform:translate(2px,-24px)}75%{transform:translate(-16px,-10px)}}
+.pl-bwing{transform-box:fill-box;animation:plBFlap .22s ease-in-out infinite alternate}.pl-bwing.l{transform-origin:100% 50%}.pl-bwing.r{transform-origin:0 50%}@keyframes plBFlap{to{transform:scaleX(.25)}}
+.pl-fall{animation:plFallK 13s ease-in infinite both}@keyframes plFallK{0%{transform:translate(0,0) rotate(0);opacity:0}4%{opacity:1}12%{transform:translate(10px,calc(var(--fall) * .3)) rotate(90deg)}20%{transform:translate(-8px,calc(var(--fall) * .62)) rotate(170deg)}28%{transform:translate(4px,var(--fall)) rotate(230deg);opacity:1}34%,100%{transform:translate(4px,var(--fall)) rotate(230deg);opacity:0}}
+.pl-shooting{opacity:0;animation:plShoot 10s ease-out infinite}@keyframes plShoot{0%{opacity:0;transform:translate(0,0)}2%{opacity:1}9%{opacity:0;transform:translate(170px,52px)}100%{opacity:0;transform:translate(170px,52px)}}
+.pl-shooting.pl-now{animation:plShootNow 1.2s ease-out 1 both}@keyframes plShootNow{0%{opacity:0;transform:translate(0,0)}15%{opacity:1}100%{opacity:0;transform:translate(170px,52px)}}
+.pl-riseup{animation:plRiseUp 5.5s ease-in infinite both}@keyframes plRiseUp{0%{transform:translateY(0);opacity:0}10%{opacity:.95}70%{transform:translateY(-90px);opacity:.6}80%,100%{transform:translateY(-100px);opacity:0}}
+.pl-riseup.pl-tall{animation-name:plRiseTall}@keyframes plRiseTall{0%{transform:translateY(0);opacity:0}10%{opacity:.95}75%{transform:translateY(-170px);opacity:.6}85%,100%{transform:translateY(-185px);opacity:0}}
+.pl-rollin{transform-box:fill-box;transform-origin:50% 50%;animation:plSpin 1.4s linear infinite}
+.pl-orbit{transform-box:fill-box;transform-origin:50% 50%;animation:plSpin 6s linear infinite}
+.pl-floaty .pl-hover{animation-duration:9s}
+.pl-glider .pl-bobfly{animation-duration:3.6s}
+/* a tap: each thing's own little show */
+.pl-drop{animation:plDropK 1.7s ease-in 1 both}@keyframes plDropK{0%{transform:translate(0,0) rotate(0);opacity:1}35%{transform:translate(8px,calc(var(--fall) * .4)) rotate(120deg)}70%{transform:translate(-6px,calc(var(--fall) * .85)) rotate(220deg)}85%{transform:translate(0,var(--fall)) rotate(260deg);opacity:1}100%{transform:translate(0,var(--fall)) rotate(260deg);opacity:0}}
+.pl-apple{animation:plAppleK 1.4s cubic-bezier(.5,0,1,1) 1 both}@keyframes plAppleK{0%{transform:translateY(0)}55%{transform:translateY(var(--fall))}70%{transform:translateY(calc(var(--fall) - 14px))}85%{transform:translateY(var(--fall))}92%{transform:translateY(calc(var(--fall) - 4px))}100%{transform:translateY(var(--fall))}}
+.pl-rain{animation:plRainK .7s linear infinite}@keyframes plRainK{from{transform:translateY(0);opacity:1}to{transform:translateY(48px);opacity:0}}
+.pl-a.pl-bloom{animation:plBloomK .85s ease-out 1!important}@keyframes plBloomK{40%{transform:scale(1.3)}100%{transform:scale(1)}}
+.pl-away{animation:plAwayK 2.5s ease-in 1 both}@keyframes plAwayK{0%{transform:translate(0,0)}40%{transform:translate(40px,-50px)}100%{transform:translate(110px,-140px);opacity:0}}
+.pl-burst{animation:plBurstK 1.8s ease-out 1 both}@keyframes plBurstK{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:1}100%{transform:translateY(-70px) scale(1.2);opacity:0}}
+.pl-a.pl-launch{animation:plLaunchK 2.6s ease-in-out 1!important}@keyframes plLaunchK{0%{transform:translate(0,0)}35%{transform:translate(150px,-320px);opacity:1}36%{opacity:0;transform:translate(150px,-320px)}37%{transform:translate(-150px,320px);opacity:0}62%{opacity:1}100%{transform:translate(0,0)}}
+.pl-a.pl-sail{animation:plSailK 2.1s ease-in-out 1!important}@keyframes plSailK{50%{transform:translateX(-60px) rotate(-4deg)}}
+.pl-a.pl-dart{animation:plDartK 1s ease-out 1!important}@keyframes plDartK{30%{transform:translateX(70px)}100%{transform:translateX(0)}}
+.pl-whirl{animation:plWhirlK 1.1s cubic-bezier(.2,.8,.3,1) 1!important}.pl-a.pl-whirl{transform-origin:50% 50%}@keyframes plWhirlK{to{transform:rotate(720deg)}}
+.pl-chalk{stroke-dasharray:1;stroke-dashoffset:1;animation:plChalkK 2.8s ease-out 1 both}@keyframes plChalkK{0%{stroke-dashoffset:1}45%{stroke-dashoffset:0;opacity:1}85%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+.pl-prop.pl-on .pl-a,.pl-prop.pl-swap .pl-a{filter:brightness(1.2) drop-shadow(0 0 7px #FFE27A)}
+.pl-on .pl-glow{opacity:.8!important;animation:none!important}
+.pl-a.pl-jump{animation:plJumpK .65s ease-out 1!important}@keyframes plJumpK{40%{transform:translateY(-14px) scale(.95,1.06)}75%{transform:translateY(0) scale(1.06,.94)}}
+.pl-puff{animation:plPuffK 1.1s ease-out 1!important}@keyframes plPuffK{50%{transform:translateY(-8px) scale(1.4);opacity:1}}
+.pl-a.pl-flyaway{animation:plFlyAwayK 2.6s ease-in-out 1!important}@keyframes plFlyAwayK{0%{transform:translate(0,0)}35%{transform:translate(90px,-110px);opacity:1}40%{opacity:0;transform:translate(90px,-110px)}45%{transform:translate(-90px,-110px);opacity:0}55%{opacity:1}100%{transform:translate(0,0)}}
+.pl-a.pl-turn{animation:plTurnK 1.1s ease-in-out 1!important}@keyframes plTurnK{30%{transform:rotate(-14deg)}70%{transform:rotate(12deg)}}
+/* the place feels the game */
+.pl-cheer .pl-sway,.pl-cheer .pl-sway2,.pl-cheer .pl-idle{animation:plCheerK .8s ease-out 1!important}@keyframes plCheerK{40%{transform:translateY(-6px) scale(1.04,.97)}}
+.pl-party .pl-sway,.pl-party .pl-sway2{animation:plDanceK .55s ease-in-out 5!important}@keyframes plDanceK{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+/* calmer for the older stages; still with the light quality and «reduce motion» */
+body[data-stage="teen"] .pl-life,body[data-stage="senior"] .pl-life{opacity:.6}
+body[data-q="lo"] .pl-bg,body[data-q="lo"] .pl-near{transform:none!important;transition:none}
+@media (prefers-reduced-motion:reduce){.pl-bg,.pl-near{transform:none!important}.pl-life{display:none}}
+/* ===== 🆕 batch 36 · THE GAME LAYER (games36.js) ===== */
+.xwrap{position:relative}
+.gx-mission{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;margin:2px auto 8px;padding:6px 14px;border-radius:999px;background:color-mix(in srgb,var(--brand) 9%,var(--panel));border:1.5px solid color-mix(in srgb,var(--brand) 30%,var(--line));width:fit-content;max-width:100%;box-sizing:border-box;font-size:.95rem;line-height:1.5}
+.gx-ic{font-size:1.2rem}
+.gx-goal{font-weight:800;color:var(--ink)}
+.gx-pips{display:inline-flex;gap:5px;flex-wrap:wrap}
+.gx-pips i{width:12px;height:12px;border-radius:50%;background:var(--panel);border:2px solid color-mix(in srgb,var(--brand) 45%,var(--line));transition:background .3s,border-color .3s}
+.gx-pips i.on{background:var(--good);border-color:var(--good)}
+.gx-pips i.pop{animation:gxPop .5s ease-out}@keyframes gxPop{40%{transform:scale(1.7)}}
+.gx-mission.gx-shake{animation:gxShake .4s}@keyframes gxShake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.gx-mission.gx-done{background:color-mix(in srgb,var(--good) 14%,var(--panel));border-color:var(--good)}
+.gx-combo{position:absolute;top:46px;left:50%;transform:translateX(-50%);padding:4px 12px;border-radius:999px;background:#FFF1D6;color:#9A5B00;font-weight:900;animation:gxCombo 1.5s ease-out forwards;pointer-events:none;z-index:6;white-space:nowrap}
+@keyframes gxCombo{0%{opacity:0;transform:translate(-50%,10px) scale(.7)}20%{opacity:1;transform:translate(-50%,0) scale(1.1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-14px)}}
+.gx-end{position:relative;margin:8px auto 4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;padding:10px 14px;border-radius:16px;background:var(--panel);border:2px solid var(--good);box-shadow:0 10px 30px rgba(16,24,40,.18);z-index:7;width:max-content;max-width:calc(100% - 20px);box-sizing:border-box;animation:gxIn .45s cubic-bezier(.3,1.5,.5,1)}
+@keyframes gxIn{from{opacity:0;transform:translateY(-12px) scale(.85)}}
+.gx-stars i{font-style:normal;font-size:1.5rem;opacity:.25;filter:grayscale(1);display:inline-block}
+.gx-stars i.on{opacity:1;filter:none;animation:gxStar .5s ease-out both;color:#F2B33D}
+@keyframes gxStar{from{transform:scale(0) rotate(-90deg)}70%{transform:scale(1.3)}}
+.gx-msg{display:flex;flex-direction:column;gap:2px}
+.gx-msg b{font-size:1rem}.gx-msg small{color:var(--muted);font-weight:700;font-size:.85rem}
+.gx-x{border:0;background:transparent;color:var(--muted);font-size:1rem;cursor:pointer;min-width:40px;min-height:40px}
+.gx-again{min-height:40px}
+.gx-conf{position:absolute;top:0;width:8px;height:12px;border-radius:2px;pointer-events:none;z-index:8;animation:gxConf 2.2s ease-in forwards}
+@keyframes gxConf{from{transform:translate(0,-10px) rotate(0)}to{transform:translate(var(--cx),340px) rotate(var(--cr));opacity:0}}
+.xnode.gx-yay .xbody{animation:gxYay .7s ease-out 1!important}@keyframes gxYay{30%{transform:translateY(-14px) scale(1.05,.95)}60%{transform:translateY(0) scale(.96,1.04)}}
+.xnode.gx-nope .xbody{animation:gxNope .5s ease-in-out 1!important}@keyframes gxNope{20%,60%{transform:rotate(-8deg)}40%,80%{transform:rotate(8deg)}}
+body[data-stage="teen"] .gx-combo,body[data-stage="senior"] .gx-combo{display:none}
+@media (max-width:520px){.gx-mission{font-size:.85rem;padding:5px 10px;border-radius:14px}}
+@media (prefers-reduced-motion:reduce){.gx-pips i.pop,.gx-mission.gx-shake,.gx-end,.gx-stars i.on,.xnode.gx-yay .xbody,.xnode.gx-nope .xbody{animation:none!important}.gx-conf{display:none}}
+/* ===== 🆕 batch 36 · the six remade activities (acts36.js) ===== */
+.g36-table{fill:color-mix(in srgb,#C9A27A 22%,var(--panel));stroke:color-mix(in srgb,#A8743F 45%,var(--line));stroke-width:2}
+.g36-lab .g36-table{fill:color-mix(in srgb,var(--brand) 7%,var(--panel));stroke:var(--line)}
+.g36-plate{fill:#fff;stroke:#D6DEE6;stroke-width:1.5;opacity:.95}
+.g36-lab .g36-plate{fill:var(--chip)}
+.g36-slot{fill:none;stroke:color-mix(in srgb,var(--brand) 40%,var(--line));stroke-width:2;stroke-dasharray:5 5;opacity:.7}
+.na-ing{cursor:pointer}.na-ing.g4-no{opacity:.45}.na-ing.g4-no .xbody{filter:grayscale(.9)}
+.g36-lane{min-height:64px;display:flex;justify-content:center;align-items:flex-start;padding:4px 8px}
+.g36-lane .na-card{max-width:min(420px,92%)}
+.g36-fall{animation:g36Fall .8s cubic-bezier(.3,1.4,.5,1) both,g36Sway 3s ease-in-out .8s infinite}
+@keyframes g36Fall{from{transform:translateY(-46px) rotate(-6deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes g36Sway{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
+.g36-bounce{animation:g36Bounce .7s ease-out}@keyframes g36Bounce{30%{transform:translateY(-26px) rotate(4deg)}60%{transform:translateY(0)}80%{transform:translateY(-6px)}}
+.g36-wig{animation:g36Wig .4s}@keyframes g36Wig{25%{transform:rotate(-4deg)}75%{transform:rotate(4deg)}}
+.g36-left{text-align:center;color:var(--muted);font-size:.85rem;margin:0 0 4px;min-height:1.2em}
+.g36-cloud,.g36-tb{fill:var(--panel);stroke:color-mix(in srgb,var(--brand) 35%,var(--line));stroke-width:2}
+.g36-q{font-size:20px;transform-box:fill-box;transform-origin:50% 50%}
+.g36-q.g36-now{animation:g36Pulse 1.2s ease-in-out infinite}@keyframes g36Pulse{50%{transform:scale(1.25)}}
+.g36-q.g36-big{animation:g36Big .5s ease-out both}@keyframes g36Big{50%{transform:scale(1.7) rotate(-12deg)}100%{transform:scale(1.3)}}
+.g36-q.g36-got{animation:g36Got .6s ease-out both}@keyframes g36Got{0%{transform:scale(.3)}60%{transform:scale(1.5)}100%{transform:scale(1.15)}}
+.g36-think.g36-lit .g36-cloud{fill:#FFF6D2;stroke:#F2B33D;filter:drop-shadow(0 0 8px rgba(242,179,61,.6))}
+.g36-climb .g36-cb{animation:aBob 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+.g36-ask{text-align:center;font-weight:800;margin:6px 0 2px;min-height:1.2em}
+.g36-opt{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.g36-oart svg{display:block;overflow:visible}
+.na-opt.g36-right{background:color-mix(in srgb,var(--good) 18%,var(--panel));border-color:var(--good)}
+.na-slot.g36-wobble{animation:g36Wob .5s}@keyframes g36Wob{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.xnode.g36-hidden{opacity:0;pointer-events:none}
+.g36-hole circle{fill:color-mix(in srgb,var(--brand) 6%,var(--panel));stroke:color-mix(in srgb,var(--brand) 40%,var(--line));stroke-width:2.4;stroke-dasharray:6 5}
+.g36-hole text{font-size:26px;font-weight:900;fill:color-mix(in srgb,var(--brand) 60%,var(--ink))}
+.g36-spark circle:first-child{fill:#FFE27A;filter:drop-shadow(0 0 6px #F2B33D)}.g36-spark .g36-sc{fill:#fff}
+.g36-guess{cursor:pointer}
+.xnode.g36-picked .xbody{filter:drop-shadow(0 0 6px #C4A7E7) drop-shadow(0 0 2px #8E6CC9)}
+.g36-mark circle{fill:var(--panel);stroke:#8E6CC9;stroke-width:2}.g36-mark text{font-size:14px}
+.g36-mark.g36-ok circle{stroke:var(--good)}.g36-mark.g36-no circle{stroke:var(--bad)}
+.g36-mark{animation:g36MarkIn .35s cubic-bezier(.3,1.6,.5,1) both;transform-box:fill-box;transform-origin:50% 50%}@keyframes g36MarkIn{from{transform:scale(0)}}
+.g36-night{fill:#1E2A4A;opacity:.6;transition:opacity 1.6s ease}
+.g36-nstar{fill:#FFF7C2;animation:plTw 2.6s ease-in-out infinite;transition:opacity 1.6s}
+.g36-day .g36-night,.g36-day .g36-nstar{opacity:0!important;animation:none}
+.g4-power .g4-bulb.g4-lit .xbody{filter:drop-shadow(0 0 10px #F2B33D) drop-shadow(0 0 22px rgba(242,179,61,.55))}
+body[data-q="lo"] .g36-fall,body[data-q="lo"] .g36-q.g36-now,body[data-q="lo"] .g36-climb .g36-cb{animation:none!important}
+@media (prefers-reduced-motion:reduce){.g36-fall,.g36-bounce,.g36-wig,.g36-q,.g36-mark,.na-slot.g36-wobble,.g36-climb .g36-cb{animation:none!important}}
+</style>

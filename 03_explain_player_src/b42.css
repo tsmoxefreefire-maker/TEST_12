@@ -1,0 +1,61 @@
+<style>
+/* 🆕 batch 42 (Hareth: «التكرار») · the same game in another look (skins42.js). Every colour leans on the page's tokens
+   (--panel, --ink, --line), so the looks work in light and in dark. */
+.sk-hide{display:none}
+/* 🧭 the journey */
+.sk-water{fill:none;stroke:color-mix(in srgb,#5BB4E5 50%,var(--panel));stroke-width:28;stroke-linecap:round;opacity:.8}
+.xstage[data-skin="river"] .xroad{stroke:color-mix(in srgb,#2F7FC1 55%,var(--panel));stroke-width:3;stroke-dasharray:12 12}
+.sk-ties{fill:none;stroke:color-mix(in srgb,#8B5A2B 60%,var(--panel));stroke-width:22;stroke-dasharray:4 11}
+.sk-rails{fill:none;stroke:color-mix(in srgb,var(--ink) 55%,var(--line));stroke-width:13}
+.sk-rails2{fill:none;stroke:var(--panel);stroke-width:8}
+.xstage[data-skin="rail"] .xroad:not(.lit){stroke:transparent}
+.xstage[data-skin="space"] .xroad{stroke:color-mix(in srgb,#8E6FD8 65%,var(--panel));stroke-width:5;stroke-dasharray:1 11}
+.sk-stars .sk-star,.sk-asm .sk-star{fill:#F5C542;opacity:.85}
+.sk-vehicle .sk-trav{filter:drop-shadow(0 2px 2px rgba(0,0,0,.18))}
+/* 🏗️ the tower */
+.sk-stone{fill:none;stroke:color-mix(in srgb,var(--ink) 28%,transparent);stroke-width:2;stroke-linecap:round}
+.sk-battle rect{fill:color-mix(in srgb,var(--ink) 10%,var(--panel));stroke:color-mix(in srgb,var(--ink) 45%,var(--line));stroke-width:2;opacity:.4;transition:opacity .4s}
+.g4-won .sk-battle rect{opacity:1}
+.sk-flag{opacity:0;transition:opacity .5s .2s}
+.g4-won .sk-flag{opacity:1}
+.sk-flag path:first-child{stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.sk-flag path+path{fill:#E2504C;stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round}
+.sk-spine{fill:none;stroke:color-mix(in srgb,var(--ink) 32%,transparent);stroke-width:2.2;stroke-linecap:round}
+.sk-board{fill:color-mix(in srgb,#8B5A2B 50%,var(--panel));stroke:color-mix(in srgb,#5A3A1A 60%,var(--ink));stroke-width:1.2}
+.xstage[data-skin="books"] .g4-ghost{stroke-dasharray:2 6}
+/* ⚖️ compare */
+.sk-basket path:first-child{fill:color-mix(in srgb,#C98B4A 40%,var(--panel));stroke:color-mix(in srgb,#7A4E22 75%,var(--ink));stroke-width:2.5;stroke-linejoin:round}
+.sk-basket .sk-weave{fill:none;stroke:color-mix(in srgb,#7A4E22 45%,transparent);stroke-width:1.6}
+.sk-basket .sk-handle{fill:none;stroke:color-mix(in srgb,#7A4E22 75%,var(--ink));stroke-width:3;stroke-linecap:round}
+.sk-house .sk-roof{fill:color-mix(in srgb,#E2504C 45%,var(--panel));stroke:color-mix(in srgb,var(--ink) 60%,var(--line));stroke-width:2.5;stroke-linejoin:round}
+.sk-house .sk-wall{fill:color-mix(in srgb,#F2C98A 35%,var(--panel));stroke:color-mix(in srgb,var(--ink) 50%,var(--line));stroke-width:2}
+.sk-house.sk-b .sk-roof{fill:color-mix(in srgb,#2F7FC1 40%,var(--panel))}
+.sk-garden ellipse{fill:color-mix(in srgb,#5FB760 40%,var(--panel))}
+.sk-garden path{fill:none;stroke:color-mix(in srgb,#2E7D32 70%,var(--ink));stroke-width:2}
+.sk-garden .sk-fl{fill:#F5A623;stroke:var(--ink);stroke-width:1}
+.na-zones[data-skin="baskets"] .na-zh::before{content:"🧺 "}
+.na-zones[data-skin="houses"] .na-z-a .na-zh::before,.na-zones[data-skin="houses"] .na-z-b .na-zh::before{content:"🏠 "}
+.na-zones[data-skin="houses"] .na-z-both .na-zh::before{content:"🌳 "}
+/* 🧩 the puzzle */
+.sk-frame{fill:color-mix(in srgb,var(--panel) 80%,#fff);stroke:color-mix(in srgb,#8B5A2B 70%,var(--ink));stroke-width:5}
+.sk-nail{fill:var(--ink)}
+.sk-string{fill:none;stroke:color-mix(in srgb,var(--ink) 40%,transparent);stroke-width:1.5}
+.sk-ring{fill:color-mix(in srgb,#8E6FD8 6%,transparent);stroke:color-mix(in srgb,#8E6FD8 55%,var(--line));stroke-width:2.5;stroke-dasharray:3 6}
+.sk-link{fill:none;stroke:color-mix(in srgb,#8E6FD8 35%,transparent);stroke-width:2;stroke-dasharray:2 7}
+.tray.sk-tray-frames{fill:color-mix(in srgb,#8B5A2B 12%,var(--panel));stroke:color-mix(in srgb,#8B5A2B 50%,var(--line))}
+.tray.sk-tray-sky{fill:color-mix(in srgb,#8E6FD8 8%,var(--panel));stroke:color-mix(in srgb,#8E6FD8 40%,var(--line))}
+/* 🌱 ❓ 🎥 the three new «parts» scenes (parts42.js) */
+.p42-floor{fill:color-mix(in srgb,#8B5A2B 30%,var(--line));opacity:.8}
+.p42-slot circle{fill:none;stroke:var(--line);stroke-width:2.5;stroke-dasharray:5 6}
+.p42-slot text,.p42-hole text{font:900 26px var(--f-head,sans-serif);fill:color-mix(in srgb,var(--ink) 35%,transparent)}
+.p42-slot.filled{opacity:0;transition:opacity .3s}
+.p42-piece{cursor:pointer}.p42-piece:focus-visible{outline:none}.p42-piece:focus-visible .xbody{filter:drop-shadow(0 0 4px var(--brand))}
+.p42-piece.placed{cursor:default}
+.p42-off{opacity:.12}
+.p42-hole circle{fill:color-mix(in srgb,#F5A623 10%,var(--panel));stroke:color-mix(in srgb,#F5A623 70%,var(--ink));stroke-width:3;stroke-dasharray:6 6;animation:p42-pulse 1.4s ease-in-out infinite}
+@keyframes p42-pulse{50%{stroke-width:5}}
+.p42-miss .xnode.tired{filter:grayscale(.75);opacity:.75}
+.p42-tour .xnode{transition:opacity .4s}
+@media (prefers-reduced-motion:reduce){.p42-hole circle{animation:none}.p42-slot.filled{transition:none}}
+@media (prefers-reduced-motion:reduce){.sk-battle rect,.sk-flag{transition:none}}
+</style>

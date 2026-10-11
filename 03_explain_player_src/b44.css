@@ -1,0 +1,8 @@
+<style>
+/* 🔊 batch 44 · the voice button (tts44.js). Colours lean on the page's tokens (light and dark). */
+.tts-b{white-space:nowrap}
+.tts-b[aria-pressed="false"]{opacity:.7}
+.tts-b.tts-wait{border-color:var(--brand);animation:ttsPulse 1.4s ease-in-out infinite}
+@keyframes ttsPulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--brand) 40%,transparent)}50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--brand) 0%,transparent)}}
+@media (prefers-reduced-motion:reduce){.tts-b.tts-wait{animation:none}}
+</style>
