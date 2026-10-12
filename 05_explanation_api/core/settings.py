@@ -2,6 +2,28 @@
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))          # 05_explanation_api/
+
+
+def _load_dotenv(*paths):
+    """🆕 a tiny .env reader (no library): KEY=value lines → os.environ. A real environment variable (Render, the terminal) always wins.
+    The file is in .gitignore: the keys never go to GitHub."""
+    for p in paths:
+        if not os.path.isfile(p):
+            continue
+        with open(p, encoding="utf-8-sig") as f:
+            for raw in f:
+                line = raw.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                k, _, v = line.partition("=")
+                k, v = k.strip().removeprefix("export ").strip(), v.strip()
+                if len(v) >= 2 and v[0] == v[-1] and v[0] in "\"'":
+                    v = v[1:-1]
+                if k and k not in os.environ:
+                    os.environ[k] = v
+
+
+_load_dotenv(os.path.join(BASE_DIR, ".env"), os.path.join(os.path.dirname(BASE_DIR), ".env"))   # 05_explanation_api/.env, then the project root .env
 # the explanation FACTORY (plain Python): the SAME code that builds the published page — no copy of it here any more
 FACTORY_DIR = os.environ.get("EXPLAIN_FACTORY_DIR", os.path.join(os.path.dirname(BASE_DIR), "02_question_factory"))
 ENGINE_DIR = FACTORY_DIR                                                        # (old name, kept for older code)

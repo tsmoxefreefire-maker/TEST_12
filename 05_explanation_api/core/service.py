@@ -274,7 +274,7 @@ def tts_audio(text: str, stage: str = "kids"):
     except tts.TTSError as e:
         msg = str(e)
         if msg == "off":
-            raise NotFound("الصوت مش مشغّل: حط بمتغيرات البيئة TTS_PROVIDER=elevenlabs + ELEVENLABS_API_KEY (أو gemini + GEMINI_API_KEY، أو AZURE_SPEECH_KEY + AZURE_SPEECH_REGION)")
+            raise NotFound("الصوت مش مشغّل: حط بمتغيرات البيئة TTS_PROVIDER=cartesia + CARTESIA_API_KEY + CARTESIA_VOICE_ID (أو gemini + GEMINI_API_KEY، أو AZURE_SPEECH_KEY + AZURE_SPEECH_REGION)")
         if msg in ("empty", "too long"):
             raise BadInput("النص فاضي" if msg == "empty" else f"النص أطول من {tts.MAX_CHARS} حرف")
         raise BadInput(f"ما قدرنا نعمل الصوت هلأ ({msg})")      # (the page goes on reading without the voice)

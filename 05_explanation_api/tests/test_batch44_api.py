@@ -115,6 +115,39 @@ class TestTheRealProviders(unittest.TestCase):
                 service.tts_audio("نص جديد للتجربة")
         self.assertNotIn("secret-key", str(cm.exception))
 
+    def test_cartesia_request_voice_model_speed_and_no_key_leak(self):
+        seen = {}
+
+        def fake_open(req, timeout=None):
+            seen["url"], seen["headers"], seen["body"] = req.full_url, dict(req.header_items()), json.loads(req.data.decode("utf-8"))
+            return _Answer(b"ID3cartesia-mp3")
+        env = {"TTS_PROVIDER": "cartesia", "CARTESIA_API_KEY": "sk_car_secret", "CARTESIA_VOICE_ID": "voice-123"}
+        with mock.patch.dict(os.environ, env), mock.patch("urllib.request.urlopen", fake_open):
+            data, mime, new = tts.speak("الجذر بيمتص الماء", "kids")
+        self.assertEqual((data, mime, new), (b"ID3cartesia-mp3", "audio/mpeg", True))
+        self.assertEqual(seen["url"], "https://api.cartesia.ai/tts/bytes")
+        h = {k.lower(): v for k, v in seen["headers"].items()}
+        self.assertEqual(h["x-api-key"], "sk_car_secret"); self.assertEqual(h["cartesia-version"], "2025-04-16")
+        b = seen["body"]
+        self.assertEqual((b["model_id"], b["language"], b["voice"]), ("sonic-3", "ar", {"mode": "id", "id": "voice-123"}))
+        self.assertEqual(b["output_format"]["container"], "mp3"); self.assertEqual(b["generation_config"]["speed"], 0.85)
+        self.assertEqual(b["transcript"], "الجذر بيمتص الماء")
+
+        def boom(req, timeout=None):
+            raise OSError("401 for key sk_car_secret")
+        with mock.patch.dict(os.environ, env), mock.patch("urllib.request.urlopen", boom):
+            with self.assertRaises(service.BadInput) as cm:
+                service.tts_audio("نص جديد للتجربة كارتيزيا")
+        self.assertNotIn("sk_car_secret", str(cm.exception))
+
+    def test_cartesia_needs_key_and_voice(self):
+        with mock.patch.dict(os.environ, {"TTS_PROVIDER": "cartesia", "CARTESIA_API_KEY": ""}):
+            self.assertEqual(tts.provider(), "none")
+        with mock.patch.dict(os.environ, {"TTS_PROVIDER": "cartesia", "CARTESIA_API_KEY": "k", "CARTESIA_VOICE_ID": ""}):
+            self.assertEqual(tts.provider(), "cartesia")
+            with self.assertRaises(tts.TTSError):
+                tts.speak("نص بلا صوت محدد", "kids")
+
     def test_gemini_request_and_both_answer_shapes(self):
         wav = tts._wav(b"\x00\x00" * 2400)
         answers = [{"steps": [{"content": [{"type": "audio", "mime_type": "audio/wav", "data": base64.b64encode(wav).decode()}]}]},
